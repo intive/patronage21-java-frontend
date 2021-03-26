@@ -1,23 +1,24 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
+import styled from 'styled-components'
 
-const useStyles = makeStyles({
-    bold: {
-        fontWeight: 600
-    }
-});
+const Header = styled.h1`
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-weight: 600;
+`;
 
 function Title(props) {
-    const classes = useStyles();
     return (
-        <Box my={4}>
-            <Typography variant="h5" component="h1" color="primary" className={classes.bold}>
-                {props.title}
-            </Typography>
-        </Box>
+        <Header>{props.title}</Header>
     )
 };
+
+Title.propTypes = {
+    title: PropTypes.string.isRequired
+};
+
+Title.defaultProps = {
+    title: "Tytuł"
+}
 
 export default Title;
