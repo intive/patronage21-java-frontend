@@ -1,9 +1,6 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import SearchInput from './SearchInput';
 import SelectInput from './SelectInput';
@@ -12,16 +9,7 @@ import UserList from './UserList';
 function UsersContainer(props) {
     let leaders = [];
     let candidates = [];
-
-    const createListItem = (user, index, users) =>
-        <ListItem key={user.email} divider={index !== users.length - 1 ? true : false}>
-            <ListItemAvatar><Avatar /></ListItemAvatar>
-            <ListItemText primary={user.firstName + " " + user.lastName} />
-        </ListItem>;
-
     props.users.forEach(user => user.role === "CANDIDATE" ? candidates.push(user) : leaders.push(user));
-    candidates = candidates.map((user, index) => createListItem(user, index, candidates));
-    leaders = leaders.map((user, index) => createListItem(user, index, leaders));
 
     return (
         <div>
@@ -47,6 +35,14 @@ function UsersContainer(props) {
             </Box>
         </div>
     )
+};
+
+UsersContainer.propTypes = {
+    title: PropTypes.string.isRequired,
+    list: PropTypes.object.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    ariaLabel: PropTypes.string.isRequired,
+    techGroups: PropTypes.object.isRequired
 };
 
 export default UsersContainer;

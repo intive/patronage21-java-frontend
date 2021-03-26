@@ -4,7 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TitleContainer from './TitleContainer';
 import UsersContainer from './UsersContainer';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from 'styled-components'
 import theme from '../styles/theme'
+import GlobalStyle from '../styles/global'
 
 function App() {
   const title = "Użytkownicy";
@@ -106,11 +108,14 @@ function App() {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <Container component="main" maxWidth="lg">
-        <CssBaseline />
-        <TitleContainer title={title} info={info}></TitleContainer>
-        <UsersContainer users={users} techGroups={techGroups}></UsersContainer>
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="lg">
+          <CssBaseline />
+          <GlobalStyle />
+          <TitleContainer title={title} info={info}></TitleContainer>
+          <UsersContainer users={users} techGroups={techGroups}></UsersContainer>
+        </Container>
+      </ThemeProvider>
     </MuiThemeProvider>
   );
 }
