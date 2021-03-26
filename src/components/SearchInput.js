@@ -1,42 +1,53 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
+const useStyles = makeStyles(({
+    formControl: {
         display: 'flex',
-        alignItems: 'center',
-        boxSizing: 'border-box',
-        lineHeight: '50px',
-        height: 50
-    },
-    input: {
-        flex: 1,
-        padding: '2px 10px',
-    },
-    iconButton: {
-        padding: 10,
-    },
+    }
 }));
 
 function SearchInput(props) {
     const classes = useStyles();
+    const [value, setValue] = useState();
+    const handleChange = e => setValue(e.target.value);
 
     return (
-        <Paper component="form" className={classes.paper} variant="outlined" square>
-            <InputBase
-                className={classes.input}
+        <FormControl className={classes.formControl} variant="outlined">
+            <OutlinedInput
+                value={value}
                 placeholder={props.placeholder}
-                inputProps={{ "aria-label": props.ariaLabel }}
+                onChange={handleChange}
+                inputProps={{
+                    'aria-label': props.ariaLabel,
+                }}
+                labelWidth={0}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    </InputAdornment>
+                }
             />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-            </IconButton>
-        </Paper>
+        </FormControl>
     )
 };
+
+SearchInput.propTypes = {
+    placeholder: PropTypes.string.isRequired,
+    ariaLabel: PropTypes.string.isRequired
+};
+
+SearchInput.defaultProps = {
+    placeholder: "Wyszukaj",
+    ariaLabel: "search"
+}
 
 export default SearchInput;
