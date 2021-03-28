@@ -26,8 +26,7 @@ const MuiTheme = createMuiTheme({
         }
     },
     typography: {
-        "fontFamily": `"Helvetica", sans-serif`,
-        "fontSize": 13
+        "fontFamily": `"Helvetica", sans-serif`
     }
 })
 
