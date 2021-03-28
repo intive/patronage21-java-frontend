@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 function Information(props) {
     return (
-        <p>{props.info}</p>
+        <p className={props.class}>{props.info}</p>
     )
-};
+}
 
 Information.propTypes = {
-    info: PropTypes.string.isRequired
+    info: PropTypes.string.isRequired,
+    class: PropTypes.string,
 };
 
 Information.defaultProps = {

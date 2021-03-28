@@ -30,9 +30,13 @@ const MuiTheme = createMuiTheme({
     }
 })
 
-const customPalette = {
+export const customPalette = {
     colors: {
         bar: colors.lightBlue2
+    },
+    text: {
+        primary: colors.black,
+        secondary: colors.grey,
     }
 }
 
