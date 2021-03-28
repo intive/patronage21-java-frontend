@@ -5,10 +5,10 @@ import Information from './Information';
 
 function TitleContainer(props) {
     return (
-        <div>
+        <>
             <Title title={props.title}></Title>
             <Information info={props.info}></Information>
-        </div>
+        </>
     )
 };
 

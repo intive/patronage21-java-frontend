@@ -20,10 +20,9 @@ System powinien wyświetlić wersję Node.js i npm
 
 ```
 cd patronage21-java-frontend
-npm install
+npm ci
 ```
 ## Wymagania
-Wymagania: 
 - Node.js 12+
 - npm 6+
 

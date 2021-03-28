@@ -27,7 +27,7 @@ function UserList(props) {
     const classes = useStyles();
 
     const createListItem = (user, index, users) =>
-        <ListItem key={user.email} divider={index !== users.length - 1 ? true : false}>
+        <ListItem key={user.email} divider={index !== users.length - 1}>
             <ListItemAvatar><Avatar /></ListItemAvatar>
             <ListItemText primary={user.firstName + " " + user.lastName} />
         </ListItem>;
@@ -48,22 +48,22 @@ function UserList(props) {
 
 UserList.propTypes = {
     title: PropTypes.string.isRequired,
-    list: PropTypes.object.isRequired
+    list: PropTypes.array.isRequired
 };
 
 UserList.defaultProps = {
     title: "Tytuł",
     list: [
         {
-        "firstName": "-",
-        "lastName": "-",
-        "email": "-",
-        "phoneNumber": "-",
-        "githubUrl": "-",
-        "userName": "-",
-        "role": "-",
-        "status": "-"
-      }
+            "firstName": "-",
+            "lastName": "-",
+            "email": "-",
+            "phoneNumber": "-",
+            "githubUrl": "-",
+            "userName": "-",
+            "role": "-",
+            "status": "-"
+        }
     ],
 }
 

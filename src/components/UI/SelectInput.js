@@ -23,8 +23,6 @@ function SelectInput(props) {
                 className={classes.input}
                 value={value}
                 onChange={handleChange}
-                labelWidth={0}
-                disableUnderline
             >
                 {items}
             </Select>
@@ -33,7 +31,7 @@ function SelectInput(props) {
 };
 
 SelectInput.propTypes = {
-    techGroups: PropTypes.object.isRequired
+    techGroups: PropTypes.array.isRequired
 };
 
 SelectInput.defaultProps = {
