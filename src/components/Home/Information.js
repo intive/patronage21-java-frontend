@@ -1,18 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function Information(props) {
-    return (
-        <p>{props.info}</p>
-    )
-};
+  return <p>{props.info}</p>;
+}
 
 Information.propTypes = {
-    info: PropTypes.string.isRequired
+  info: PropTypes.string.isRequired,
 };
 
 Information.defaultProps = {
-    info: "Informacja"
-}
+  info: "Informacja",
+};
 
 export default Information;
