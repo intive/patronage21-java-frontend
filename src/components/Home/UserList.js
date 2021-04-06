@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components'
 
-const UserListTitle = styled.span`
+export const UserListTitle = styled.span`
     flex: 1;
     font-weight: 600;
 `;

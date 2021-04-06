@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from './Title';
-import Information from './Information';
+import Information from '../UI/Information';
+import SiteHeader from "../UI/SiteHeader";
 
 function TitleContainer(props) {
     return (
         <>
-            <Title title={props.title}></Title>
-            <Information info={props.info}></Information>
+            <SiteHeader> {props.title}</SiteHeader>
+            <Information info={props.info}/>
         </>
     )
 };
