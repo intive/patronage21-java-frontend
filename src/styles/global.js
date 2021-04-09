@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -9,6 +9,6 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1em;
     background-color: #fff;
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;
