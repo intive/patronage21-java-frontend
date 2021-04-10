@@ -29,7 +29,7 @@ function NewProject(props) {
   }
 
   function handleAdd() {
-    var newProject = { name: newProjectName, role: newProjectRole };
+    const newProject = { name: newProjectName, role: newProjectRole };
     let userToModify = Object.assign({}, props.user);
     userToModify.projects.push(newProject);
     props.setUser(userToModify);
