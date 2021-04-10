@@ -7,9 +7,9 @@ import UserEdit from "./views/User/UserEdit";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App Component={Home}/>
-    <App Component={User}/>
-    <App Component={UserEdit}/>
+    <App Component={Home} />
+    <App Component={User} />
+    <App Component={UserEdit} />
   </React.StrictMode>,
   document.getElementById("root")
 );

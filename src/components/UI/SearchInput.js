@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
@@ -15,15 +15,14 @@ const useStyles = makeStyles({
 
 function SearchInput(props) {
   const classes = useStyles();
-  const [value, setValue] = useState("");
-  const handleChange = (e) => setValue(e.target.value);
 
   return (
     <FormControl className={classes.formControl} variant="outlined">
       <OutlinedInput
-        value={value}
+        value={props.value}
         placeholder={props.placeholder}
-        onChange={handleChange}
+        onChange={props.handleChange}
+        type="search"
         inputProps={{
           "aria-label": props.ariaLabel,
         }}
@@ -32,8 +31,10 @@ function SearchInput(props) {
           <InputAdornment position="end">
             <IconButton
               type="submit"
-              className={classes.iconButton}
               aria-label="search"
+              disableFocusRipple
+              disableRipple
+              style={{ backgroundColor: "transparent" }}
             >
               <SearchIcon />
             </IconButton>
@@ -47,11 +48,14 @@ function SearchInput(props) {
 SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   ariaLabel: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 SearchInput.defaultProps = {
   placeholder: "Wyszukaj",
   ariaLabel: "search",
+  value: "",
 };
 
 export default SearchInput;

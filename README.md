@@ -5,6 +5,8 @@ Jest to webowy moduł aplikacji Patronative wspierający zarządzanie użytkowni
 - React 17
 - Material-UI 4.11
 - styled-components 5.2
+- Frisbee 3.1
+- Recoil 0.2
 
 ## Instalacja
 1) Instalacja Node.js -> https://nodejs.org (zainstaluje się też wtedy menadżer pakietów npm) 

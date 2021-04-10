@@ -37,7 +37,7 @@ export function generateListItems(list) {
   const classes = styles();
   return list.map((item, index) => {
     return (
-      <ListItem divider={index !== list.length - 1} key={item.name}>
+      <ListItem divider={index !== list.length - 1} key={index}>
         <Grid container direction={"column"}>
           <Grid item className={classes.project}>
             <strong>{item.name}</strong>

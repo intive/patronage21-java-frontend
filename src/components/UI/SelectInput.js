@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,9 +12,7 @@ const useStyles = makeStyles({
 });
 
 function SelectInput(props) {
-  const [value, setValue] = useState(props.list[0].value);
   const classes = useStyles();
-  const handleChange = (e) => setValue(e.target.value);
   const items = props.list.map((item) => (
     <MenuItem value={item.value} key={item.value}>
       {item.name}
@@ -23,7 +21,11 @@ function SelectInput(props) {
 
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <Select className={classes.input} value={value} onChange={handleChange}>
+      <Select
+        className={classes.input}
+        value={props.value}
+        onChange={props.handleChange}
+      >
         {items}
       </Select>
     </FormControl>
@@ -32,6 +34,8 @@ function SelectInput(props) {
 
 SelectInput.propTypes = {
   techGroups: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 SelectInput.defaultProps = {
@@ -41,6 +45,7 @@ SelectInput.defaultProps = {
       name: "-",
     },
   ],
+  value: "all",
 };
 
 export default SelectInput;

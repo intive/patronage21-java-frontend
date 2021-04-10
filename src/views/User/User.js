@@ -17,13 +17,13 @@ import {
 } from "../../config/Constants";
 import Information from "../../components/UI/Information";
 
-const styles = makeStyles(theme => ({
-    text: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        columnCount: 2,
-        wordBreak: "keep-all",
-    },
+const styles = makeStyles((theme) => ({
+  text: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    columnCount: 2,
+    wordBreak: "keep-all",
+  },
 }));
 
 function User() {
