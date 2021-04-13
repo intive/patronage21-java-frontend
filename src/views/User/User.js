@@ -20,7 +20,8 @@ const styles = makeStyles(theme => ({
     text: {
         paddingLeft: 15,
         paddingRight: 15,
-        wordBreak: "break-all",
+        columnCount: 2,
+        wordBreak: "keep-all",
     },
 }));
 
