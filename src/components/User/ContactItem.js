@@ -12,6 +12,8 @@ const styles = makeStyles((theme) => ({
   button: {
     maxWidth: 180,
     width: "100%",
+    marginBottom: 10,
+    borderRadius: 25,
   },
   listItem: {
     flexDirection: "column",
