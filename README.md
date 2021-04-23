@@ -35,3 +35,30 @@ npm start
 ```
 
 Aplikacja będzie dostępna pod adresem http://localhost:3000 w przeglądarce internetowej.
+
+## Docker
+Aplikację można uruchomić w kontenerze dockerowym (wymagany docker -> https://docs.docker.com/get-docker/).
+### Tryb developerski
+Należy zbudować obraz dockerowy oraz uruchomić kontener z aplikacją.
+```
+cd patronage21-java-frontend
+docker-compose -f docker-compose.dev.yml up -d --build  
+```
+Aplikacja będzie dostępna pod adresem http://localhost:3001.
+
+Aby zatrzymać kontener należy użyć instrukcji:
+```
+docker-compose -f docker-compose.dev.yml stop
+```
+### Tryb produkcyjny
+Budowanie obrazu dockerowego oraz uruchamianie kontenera z aplikacją.
+```
+cd patronage21-java-frontend
+docker-compose up -d --build
+```
+Aplikacja będzie dostępna pod adresem http://localhost:8877.
+
+Zatrzymywanie kontenera:
+```
+docker-compose stop
+```

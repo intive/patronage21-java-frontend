@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  patronative-fe:
+    container_name: patronative-fe
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "8877:80"
