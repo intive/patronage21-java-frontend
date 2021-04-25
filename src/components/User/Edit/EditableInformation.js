@@ -1,7 +1,9 @@
+import React from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Information from "../../UI/Information";
-import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(() => ({
@@ -12,42 +14,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function EditableInformation(props) {
+function EditableInformation() {
+  const edited = useRecoilValue(userIsEditedState);
+  const [bio, setBio] = useRecoilState(userProperty("bio"));
   const classes = useStyles();
 
-  function handleOnChange(event) {
-    const { value } = event.target;
-    let userToUpdate = Object.assign({}, props.user);
-    userToUpdate.bio = value;
-    props.setUser(userToUpdate);
-  }
-
-  const editableBioInfo = () => (
+  const editableBio = () => (
     <Box py={2}>
       <TextField
         className={classes.text}
-        value={props.user.bio}
-        primary={props.user.bio}
-        onChange={(event) => handleOnChange(event)}
+        value={bio}
+        onChange={(event) => setBio(event.target.value)}
       />
     </Box>
   );
 
   return (
     <>
-      {props.edit ? (
-        editableBioInfo()
-      ) : (
-        <Information info={props.user.bio} class={classes.text} />
-      )}
+      {edited ? editableBio() : <Information info={bio} class={classes.text} />}
     </>
   );
 }
-
-EditableInformation.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
-};
 
 export default EditableInformation;

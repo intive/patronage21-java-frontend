@@ -1,62 +1,55 @@
+import React from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { ListItem, ListItemText, TextField } from "@material-ui/core";
+import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { makeStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
 import { USER_CONTACT_TITLE } from "../../../config/Constants";
 import ListGroup from "../ListGroup";
 
-const styles = makeStyles((theme) => ({
-  text: {
-    color: theme.palette.text.primary,
-  },
+const styles = makeStyles({
   listItemView: {
     padding: 16,
   },
-}));
+});
 
-function EditableContact(props) {
+function EditableContact() {
+  const [email, setEmail] = useRecoilState(userProperty("email"));
+  const [phone, setPhone] = useRecoilState(userProperty("phone"));
+  const [github, setGithub] = useRecoilState(userProperty("github"));
+  const edited = useRecoilValue(userIsEditedState);
   const classes = styles();
 
-  function handleOnChange(event, propertyName) {
-    const { value } = event.target;
-    let userToUpdate = Object.assign({}, props.user);
-    userToUpdate[propertyName] = value;
-    props.setUser(userToUpdate);
-  }
-
-  const contactProperties = ["email", "phone", "github"];
+  const contactProperties = [
+    { name: email, setter: setEmail },
+    { name: phone, setter: setPhone },
+    { name: github, setter: setGithub },
+  ];
 
   const contactItems = contactProperties.map((property, index) => (
     <ListItem
       divider={index !== contactProperties.length - 1}
       className={classes.listItemView}
-      key={property}
+      key={index}
     >
-      <ListItemText primary={props.user[property]} />
+      <ListItemText primary={property.name} />
     </ListItem>
   ));
 
-  const editableContactItems = contactProperties.map((property) => (
-    <ListItem className={classes.listItemView} key={property}>
+  const editableContactItems = contactProperties.map((property, index) => (
+    <ListItem className={classes.listItemView} key={index}>
       <TextField
-        value={props.user[property]}
-        className={classes.text}
-        primary={props.user[property]}
-        onChange={(event) => handleOnChange(event, property)}
+        value={property.name}
+        primary={property.name}
+        onChange={(event) => property.setter(event.target.value)}
       />
     </ListItem>
   ));
 
   return (
     <ListGroup groupTitle={USER_CONTACT_TITLE}>
-      {props.edit ? editableContactItems : contactItems}
+      {edited ? editableContactItems : contactItems}
     </ListGroup>
   );
 }
-
-EditableContact.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
-};
 
 export default EditableContact;

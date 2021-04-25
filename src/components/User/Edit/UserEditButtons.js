@@ -1,3 +1,5 @@
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { userIsEditedState } from "../../../state/atoms";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +9,10 @@ import {
   DEACTIVATE_PROFILE_BTN_TEXT,
   CANCEL_BTN_TEXT,
 } from "../../../config/Constants";
-import PropTypes from "prop-types";
+import {
+  updateUserQuery,
+  canselUserEditionQuery,
+} from "../../../state/selectors";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -17,21 +22,29 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function UserEditButtons(props) {
+function UserEditButtons() {
+  const [edited, setEdited] = useRecoilState(userIsEditedState);
+  const updateUser = useSetRecoilState(updateUserQuery);
+  const canselUserEdition = useSetRecoilState(canselUserEditionQuery);
   const classes = useStyles();
 
   function editUser() {
-    props.onToggleEditMode();
-    props.saveUserState();
+    setEdited(!edited);
+    updateUser();
   }
 
-  const itemButton = (color, functionOnClick, buttonText) => (
+  function cancelEdition() {
+    setEdited(false);
+    canselUserEdition();
+  }
+
+  const itemButton = (color, buttonText, functionOnClick, functionParam) => (
     <Grid item xs={12} key={buttonText}>
       <Button
         className={classes.button}
         variant={"contained"}
         color={color}
-        onClick={functionOnClick}
+        onClick={(event) => functionOnClick(functionParam)}
       >
         {buttonText}
       </Button>
@@ -41,23 +54,16 @@ function UserEditButtons(props) {
   return (
     <Grid item xs={12}>
       <Grid container spacing={2} direction={"column"}>
-        {props.edit
+        {edited
           ? [
-              itemButton("secondary", props.onToggleEditMode, APPROVE_BTN_TEXT),
-              itemButton("secondary", props.cancelUserEdit, CANCEL_BTN_TEXT),
+              itemButton("secondary", APPROVE_BTN_TEXT, editUser),
+              itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
             ]
-          : itemButton("secondary", editUser, EDIT_PROFILE_BTN_TEXT)}
-        {itemButton("primary", () => void 0, DEACTIVATE_PROFILE_BTN_TEXT)}
+          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, setEdited, !edited)}
+        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, () => void 0)}
       </Grid>
     </Grid>
   );
 }
-
-UserEditButtons.propTypes = {
-  edit: PropTypes.bool.isRequired,
-  onToggleEditMode: PropTypes.func.isRequired,
-  saveUserState: PropTypes.func.isRequired,
-  cancelUserEdit: PropTypes.func.isRequired,
-};
 
 export default UserEditButtons;
