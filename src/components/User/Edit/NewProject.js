@@ -30,9 +30,9 @@ function NewProject(props) {
 
   function handleAdd() {
     const newProject = { name: newProjectName, role: newProjectRole };
-    let userToModify = Object.assign({}, props.user);
-    userToModify.projects.push(newProject);
-    props.setUser(userToModify);
+    const updatedProjects = [...props.projects];
+    updatedProjects.push(newProject);
+    props.updateProjects(updatedProjects);
     setNewProjectName("");
     setNewProjectRole("");
   }
@@ -64,8 +64,8 @@ function NewProject(props) {
 }
 
 NewProject.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired,
+  updateProjects: PropTypes.func.isRequired,
 };
 
 export default NewProject;

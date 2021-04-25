@@ -18,10 +18,12 @@ function EditableProject(props) {
   const classes = styles();
 
   function handleOnChange(event, index, propertyName) {
-    const { value } = event.target;
-    let userToUpdate = Object.assign({}, props.user);
-    userToUpdate.projects[index][propertyName] = value;
-    props.setUser(userToUpdate);
+    const updatedProjects = [...props.projects];
+    updatedProjects[index] = {
+      ...updatedProjects[index],
+      [propertyName]: event.target.value,
+    };
+    props.updateProjects(updatedProjects);
   }
 
   const item = (project, index, propertyName) => (
@@ -40,18 +42,17 @@ function EditableProject(props) {
 
   return (
     <List>
-      {Object.keys(props.project).map((key) =>
-        item(props.project, props.index, key)
+      {Object.keys(props.projects[props.index]).map((key) =>
+        item(props.projects[props.index], props.index, key)
       )}
     </List>
   );
 }
 
 EditableProject.propTypes = {
-  project: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired,
+  updateProjects: PropTypes.func.isRequired,
 };
 
 export default EditableProject;

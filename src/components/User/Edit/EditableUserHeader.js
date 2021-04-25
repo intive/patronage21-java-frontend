@@ -1,37 +1,30 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { TextField } from "@material-ui/core";
 import UserHeader from "../UserHeader";
 
-function EditableUserHeader(props) {
-  function handleOnChange(event, propertyName) {
-    const { value } = event.target;
-    let userToUpdate = Object.assign({}, props.user);
-    userToUpdate[propertyName] = value;
-    props.setUser(userToUpdate);
-  }
+function EditableUserHeader() {
+  const edited = useRecoilValue(userIsEditedState);
+  const [firstName, setFirstName] = useRecoilState(userProperty("firstName"));
+  const [lastName, setLastName] = useRecoilState(userProperty("lastName"));
 
-  const item = (propertyName) => (
-    <TextField
-      value={props.user[propertyName]}
-      primary={props.user[propertyName]}
-      onChange={(event) => handleOnChange(event, propertyName)}
-    />
-  );
+  const item = (property, setMethod) => {
+    return (
+      <TextField
+        value={property}
+        onChange={(event) => setMethod(event.target.value)}
+      />
+    );
+  };
 
   return (
     <UserHeader
-      firstName={props.edit ? item("firstName") : props.user.firstName}
-      lastName={props.edit ? item("lastName") : props.user.lastName}
-      alignItems={props.edit ? "baseline" : "center"}
+      firstName={edited ? item(firstName, setFirstName) : firstName}
+      lastName={edited ? item(lastName, setLastName) : lastName}
+      alignItems={edited ? "baseline" : "center"}
     />
   );
 }
-
-EditableUserHeader.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
-};
 
 export default EditableUserHeader;
