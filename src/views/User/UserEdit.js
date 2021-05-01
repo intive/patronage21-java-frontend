@@ -1,6 +1,4 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { currentUserState } from "../../state/atoms";
 import GroupTitle from "../../components/UI/GroupTitle";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -12,8 +10,6 @@ import UserEditButtons from "../../components/User/Edit/UserEditButtons";
 import { USER_BIO_TITLE } from "../../config/Constants";
 
 function UserEdit() {
-  const user = useRecoilValue(currentUserState);
-
   return (
     <>
       <EditableUserHeader />
@@ -21,7 +17,7 @@ function UserEdit() {
       <EditableInformation />
       <Box my={5}>
         <Grid container spacing={3}>
-          <EditableProjectsList val={user.projects} />
+          <EditableProjectsList/>
           <EditableContact />
           <UserEditButtons />
         </Grid>

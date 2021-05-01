@@ -11,7 +11,7 @@ import {
 } from "../../../config/Constants";
 import {
   updateUserQuery,
-  canselUserEditionQuery,
+  cancelUserEditionQuery,
 } from "../../../state/selectors";
 
 const useStyles = makeStyles(() => ({
@@ -19,32 +19,28 @@ const useStyles = makeStyles(() => ({
     color: "white",
     maxWidth: 320,
     width: "100%",
+    borderRadius: 25,
   },
 }));
 
 function UserEditButtons() {
   const [edited, setEdited] = useRecoilState(userIsEditedState);
   const updateUser = useSetRecoilState(updateUserQuery);
-  const canselUserEdition = useSetRecoilState(canselUserEditionQuery);
+  const cancelEdition = useSetRecoilState(cancelUserEditionQuery);
   const classes = useStyles();
 
-  function editUser() {
-    setEdited(!edited);
-    updateUser();
-  }
+  const handleClick = (edition, functionOnClick) => (event) => {
+    setEdited(edition);
+    if (functionOnClick !== undefined) functionOnClick();
+  };
 
-  function cancelEdition() {
-    setEdited(false);
-    canselUserEdition();
-  }
-
-  const itemButton = (color, buttonText, functionOnClick, functionParam) => (
+  const itemButton = (color, buttonText, edition, functionOnClick) => (
     <Grid item xs={12} key={buttonText}>
       <Button
         className={classes.button}
         variant={"contained"}
         color={color}
-        onClick={(event) => functionOnClick(functionParam)}
+        onClick={handleClick(edition, functionOnClick)}
       >
         {buttonText}
       </Button>
@@ -56,11 +52,11 @@ function UserEditButtons() {
       <Grid container spacing={2} direction={"column"}>
         {edited
           ? [
-              itemButton("secondary", APPROVE_BTN_TEXT, editUser),
-              itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
+              itemButton("secondary", APPROVE_BTN_TEXT, false, updateUser),
+              itemButton("secondary", CANCEL_BTN_TEXT, false, cancelEdition),
             ]
-          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, setEdited, !edited)}
-        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, () => void 0)}
+          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, true)}
+        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, edited)}
       </Grid>
     </Grid>
   );

@@ -15,17 +15,17 @@ function EditableProjectsList() {
   const edited = useRecoilValue(userIsEditedState);
   const [projects, setProjects] = useRecoilState(userProperty("projects"));
 
-  function onToggleDelete(index) {
+  const onToggleDelete = (index) => () => {
     const updatedProjects = [...projects];
     if (index !== -1) {
       updatedProjects.splice(index, 1);
       setProjects(updatedProjects);
     }
-  }
+  };
 
   const deleteButton = (index) => (
     <ListItemSecondaryAction>
-      <IconButton aria-label="done" onClick={() => onToggleDelete(index)}>
+      <IconButton aria-label="done" onClick={onToggleDelete(index)}>
         <DeleteIcon />
       </IconButton>
     </ListItemSecondaryAction>

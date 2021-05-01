@@ -1,6 +1,6 @@
 import { selector, selectorFamily } from "recoil";
 import { usersSearchValueState, currentUserState, userProperty } from "./atoms";
-import { getTechGroups, getUsers } from "../client/client";
+import { getTechGroups, getUsers, updateUser } from "../client/client";
 
 export const usersQuery = selectorFamily({
   key: "users",
@@ -22,10 +22,11 @@ export const updateUserQuery = selector({
       (key) => (updatedUser[key] = get(userProperty(key)))
     );
     set(currentUserState, updatedUser);
+    updateUser(updatedUser);
   },
 });
 
-export const canselUserEditionQuery = selector({
+export const cancelUserEditionQuery = selector({
   key: "cancelUserEdition",
   set: ({ get, set }) => {
     Object.keys(get(currentUserState)).forEach((key) =>

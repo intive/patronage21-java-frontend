@@ -9,13 +9,12 @@ function EditableUserHeader() {
   const [firstName, setFirstName] = useRecoilState(userProperty("firstName"));
   const [lastName, setLastName] = useRecoilState(userProperty("lastName"));
 
+  const handleChange = (setMethod) => (event) => {
+    setMethod(event.target.value);
+  };
+
   const item = (property, setMethod) => {
-    return (
-      <TextField
-        value={property}
-        onChange={(event) => setMethod(event.target.value)}
-      />
-    );
+    return <TextField value={property} onChange={handleChange(setMethod)} />;
   };
 
   return (

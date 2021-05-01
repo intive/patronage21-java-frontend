@@ -3,28 +3,27 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import PropTypes from "prop-types";
 
-const styles = makeStyles((theme) => ({
+const styles = makeStyles({
   project: {
-    color: theme.palette.text.primary,
     fontWeight: 600,
     height: 25,
   },
   listItem: {
     height: 50,
   },
-}));
+});
 
 function EditableProject(props) {
   const classes = styles();
 
-  function handleOnChange(event, index, propertyName) {
+  const handleOnChange = (index, propertyName) => (event) => {
     const updatedProjects = [...props.projects];
     updatedProjects[index] = {
       ...updatedProjects[index],
       [propertyName]: event.target.value,
     };
     props.updateProjects(updatedProjects);
-  }
+  };
 
   const item = (project, index, propertyName) => (
     <ListItem
@@ -35,7 +34,7 @@ function EditableProject(props) {
       <TextField
         value={project[propertyName]}
         className={classes.project}
-        onChange={(event) => handleOnChange(event, index, propertyName)}
+        onChange={handleOnChange(index, propertyName)}
       />
     </ListItem>
   );

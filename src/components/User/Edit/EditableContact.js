@@ -14,33 +14,36 @@ const styles = makeStyles({
 
 function EditableContact() {
   const [email, setEmail] = useRecoilState(userProperty("email"));
-  const [phone, setPhone] = useRecoilState(userProperty("phone"));
-  const [github, setGithub] = useRecoilState(userProperty("github"));
+  const [phone, setPhone] = useRecoilState(userProperty("phoneNumber"));
+  const [github, setGithub] = useRecoilState(userProperty("gitHubUrl"));
   const edited = useRecoilValue(userIsEditedState);
   const classes = styles();
 
   const contactProperties = [
-    { name: email, setter: setEmail },
-    { name: phone, setter: setPhone },
-    { name: github, setter: setGithub },
+    { key: "email", value: email, setter: setEmail },
+    { key: "phone", value: phone, setter: setPhone },
+    { key: "github", value: github, setter: setGithub },
   ];
+
+  const setContactProperty = (setMethod) => (event) => {
+    setMethod(event.target.value);
+  };
 
   const contactItems = contactProperties.map((property, index) => (
     <ListItem
       divider={index !== contactProperties.length - 1}
       className={classes.listItemView}
-      key={index}
+      key={property.key}
     >
-      <ListItemText primary={property.name} />
+      <ListItemText primary={property.value} />
     </ListItem>
   ));
 
-  const editableContactItems = contactProperties.map((property, index) => (
-    <ListItem className={classes.listItemView} key={index}>
+  const editableContactItems = contactProperties.map((property) => (
+    <ListItem className={classes.listItemView} key={property.key}>
       <TextField
-        value={property.name}
-        primary={property.name}
-        onChange={(event) => property.setter(event.target.value)}
+        value={property.value}
+        onChange={setContactProperty(property.setter)}
       />
     </ListItem>
   ));
