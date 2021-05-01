@@ -4,12 +4,9 @@ import UsersContainer from "../../components/Home/UsersContainer";
 import { HOME_TITLE, HOME_INFO } from "../../config/Constants";
 
 function Home() {
-  const title = HOME_TITLE;
-  const info = HOME_INFO;
-
   return (
     <>
-      <TitleContainer title={title} info={info} />
+      <TitleContainer title={HOME_TITLE} info={HOME_INFO} />
       <UsersContainer />
     </>
   );

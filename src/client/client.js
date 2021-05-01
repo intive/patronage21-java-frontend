@@ -1,9 +1,10 @@
 import { techGroups } from "../mocks/techGroups";
+import { config } from "../config/Config";
 
 const Frisbee = require("frisbee");
 
 const api = new Frisbee({
-  baseURI: "http://localhost:8080/frontend-api",
+  baseURI: config.API_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -34,5 +35,31 @@ export const getUsers = async (role, searchedUserData) => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const updateUser = async (updatedUser) => {
+  try {
+    const params = [
+      "login",
+      "firstName",
+      "lastName",
+      "email",
+      "phoneNumber",
+      "gitHubUrl",
+      "bio",
+      "projects",
+    ].reduce((accumulator, param) => {
+      accumulator[param] = updatedUser[param];
+      return accumulator;
+    }, {});
+    const res = await api.put("/users", {
+      body: params,
+    });
+    if (res.err) {
+      console.error(res.err);
+    }
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -20,14 +20,6 @@ function NewProject(props) {
   const [newProjectName, setNewProjectName] = useState("");
   const [newProjectRole, setNewProjectRole] = useState("");
 
-  function handleNewProjectNameChange(event) {
-    setNewProjectName(event.target.value);
-  }
-
-  function handleNewProjectRoleChange(event) {
-    setNewProjectRole(event.target.value);
-  }
-
   function handleAdd() {
     const newProject = { name: newProjectName, role: newProjectRole };
     const updatedProjects = [...props.projects];
@@ -37,13 +29,17 @@ function NewProject(props) {
     setNewProjectRole("");
   }
 
+  const handleChange = (functionOnChange) => (event) => {
+    functionOnChange(event.target.value);
+  };
+
   const item = (value, label, functionOnChange) => (
     <ListItem disableGutters={true}>
       <TextField
         value={value}
         label={label}
         className={classes.project}
-        onChange={functionOnChange}
+        onChange={handleChange(functionOnChange)}
       />
     </ListItem>
   );
@@ -51,8 +47,8 @@ function NewProject(props) {
   return (
     <ListItem>
       <List>
-        {item(newProjectName, "projekt", handleNewProjectNameChange)}
-        {item(newProjectRole, "rola", handleNewProjectRoleChange)}
+        {item(newProjectName, "projekt", setNewProjectName)}
+        {item(newProjectRole, "rola", setNewProjectRole)}
       </List>
       <ListItemSecondaryAction>
         <IconButton aria-label="add" onClick={handleAdd}>

@@ -10,7 +10,8 @@ const useStyles = makeStyles(() => ({
   text: {
     paddingLeft: 15,
     paddingRight: 15,
-    wordBreak: "break-all",
+    columnCount: 2,
+    wordBreak: "keep-all",
   },
 }));
 
@@ -19,12 +20,16 @@ function EditableInformation() {
   const [bio, setBio] = useRecoilState(userProperty("bio"));
   const classes = useStyles();
 
+  const handleChange = (event) => setBio(event.target.value);
+
   const editableBio = () => (
     <Box py={2}>
       <TextField
         className={classes.text}
         value={bio}
-        onChange={(event) => setBio(event.target.value)}
+        multiline={true}
+        fullWidth={true}
+        onChange={handleChange}
       />
     </Box>
   );
