@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Information from "../UI/Information";
 import SiteHeader from "../UI/SiteHeader";
 
 function TitleContainer(props) {
   return (
     <>
       <SiteHeader> {props.title}</SiteHeader>
-      <Information info={props.info} />
+      <p>{props.info}</p>
     </>
   );
 }

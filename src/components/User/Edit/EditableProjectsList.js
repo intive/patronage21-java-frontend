@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ProjectsList from "../ProjectsList";
 import EditableProject from "./EditableProject";
 import NewProject from "./NewProject";
-import ListGroup from "../ListGroup";
+import GroupList from "../../UI/GroupList";
 import { USER_PROJECTS_TITLE } from "../../../config/Constants";
 
 function EditableProjectsList() {
@@ -50,12 +50,9 @@ function EditableProjectsList() {
   return (
     <>
       {edited ? (
-        <ListGroup
-          groupTitle={USER_PROJECTS_TITLE}
-          groupCounter={projects.length}
-        >
+        <GroupList title={USER_PROJECTS_TITLE} counter={projects.length}>
           {editableProjects()}
-        </ListGroup>
+        </GroupList>
       ) : (
         <ProjectsList projects={projects} />
       )}

@@ -18,12 +18,8 @@ function UserListsContainer() {
   return (
     <Box my={5}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <UserList title={HOME_LIST_LEADERS_TITLE} list={leaders} />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <UserList title={HOME_LIST_CANDIDATES_TITLE} list={candidates} />
-        </Grid>
+        <UserList title={HOME_LIST_LEADERS_TITLE} list={leaders} />
+        <UserList title={HOME_LIST_CANDIDATES_TITLE} list={candidates} />
       </Grid>
     </Box>
   );

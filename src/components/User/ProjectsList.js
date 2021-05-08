@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ListGroup from "./ListGroup";
+import GroupList from "../UI/GroupList";
 import { ListItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -18,12 +18,9 @@ const styles = makeStyles((theme) => ({
 
 function ProjectsList(props) {
   return (
-    <ListGroup
-      groupTitle={USER_PROJECTS_TITLE}
-      groupCounter={props.projects.length}
-    >
+    <GroupList title={USER_PROJECTS_TITLE} counter={props.projects.length}>
       {generateListItems(props.projects)}
-    </ListGroup>
+    </GroupList>
   );
 }
 
@@ -33,7 +30,7 @@ ProjectsList.propTypes = {
 
 export default ProjectsList;
 
-export function generateListItems(list) {
+function generateListItems(list) {
   const classes = styles();
   return list.map((item, index) => {
     return (
