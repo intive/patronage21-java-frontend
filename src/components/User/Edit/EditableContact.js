@@ -2,13 +2,28 @@ import React from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ListItem, ListItemText, TextField } from "@material-ui/core";
 import { userIsEditedState, userProperty } from "../../../state/atoms";
+import { Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { USER_CONTACT_TITLE } from "../../../config/Constants";
-import ListGroup from "../ListGroup";
+import {
+  USER_CONTACT_TITLE,
+  USER_CONTACT_BUTTON_GITHUB,
+  USER_CONTACT_BUTTON_MAIL,
+  USER_CONTACT_BUTTON_PHONE,
+} from "../../../config/Constants";
+import GroupList from "../../UI/GroupList";
 
 const styles = makeStyles({
   listItemView: {
     padding: 16,
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  button: {
+    maxWidth: 200,
+    width: "100%",
+    marginBottom: 10,
+    borderRadius: 25,
   },
 });
 
@@ -20,9 +35,24 @@ function EditableContact() {
   const classes = styles();
 
   const contactProperties = [
-    { key: "email", value: email, setter: setEmail },
-    { key: "phone", value: phone, setter: setPhone },
-    { key: "github", value: github, setter: setGithub },
+    {
+      key: "email",
+      value: email,
+      setter: setEmail,
+      buttonText: USER_CONTACT_BUTTON_MAIL,
+    },
+    {
+      key: "phone",
+      value: phone,
+      setter: setPhone,
+      buttonText: USER_CONTACT_BUTTON_PHONE,
+    },
+    {
+      key: "github",
+      value: github,
+      setter: setGithub,
+      buttonText: USER_CONTACT_BUTTON_GITHUB,
+    },
   ];
 
   const setContactProperty = (setMethod) => (event) => {
@@ -36,6 +66,17 @@ function EditableContact() {
       key={property.key}
     >
       <ListItemText primary={property.value} />
+      <Grid container>
+        <Grid item xs={12} md={7} lg={5}>
+          <Button
+            className={classes.button}
+            variant={"contained"}
+            color={"secondary"}
+          >
+            {property.buttonText}
+          </Button>
+        </Grid>
+      </Grid>
     </ListItem>
   ));
 
@@ -49,9 +90,9 @@ function EditableContact() {
   ));
 
   return (
-    <ListGroup groupTitle={USER_CONTACT_TITLE}>
+    <GroupList title={USER_CONTACT_TITLE}>
       {edited ? editableContactItems : contactItems}
-    </ListGroup>
+    </GroupList>
   );
 }
 

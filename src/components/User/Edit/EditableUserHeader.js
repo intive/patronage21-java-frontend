@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { TextField } from "@material-ui/core";
-import UserHeader from "../UserHeader";
+import UserHeader from "../UI/UserHeader";
 
 function EditableUserHeader() {
   const edited = useRecoilValue(userIsEditedState);
