@@ -17,7 +17,7 @@ function UserEdit() {
       <EditableInformation />
       <Box my={5}>
         <Grid container spacing={3}>
-          <EditableProjectsList/>
+          <EditableProjectsList />
           <EditableContact />
           <UserEditButtons />
         </Grid>

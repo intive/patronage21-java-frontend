@@ -9,6 +9,7 @@ const colors = {
   green: "#89ca35",
   red: "#f30e2b",
   grey: "#9f9f9f",
+  lightGrey: "#fafafa",
   white1: "#efefef",
   white2: "#ebf8ff",
 };
@@ -33,6 +34,7 @@ const MuiTheme = createMuiTheme({
 const customPalette = {
   colors: {
     bar: colors.lightBlue2,
+    listItemHovered: colors.lightGrey,
   },
   text: {
     primary: colors.black,

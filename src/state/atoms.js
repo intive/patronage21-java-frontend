@@ -1,6 +1,11 @@
 import { atom, atomFamily, selectorFamily } from "recoil";
 import { userEdit } from "../mocks/userEdit";
 
+export const activeViewState = atom({
+  key: "activeView",
+  default: "home",
+});
+
 export const usersSearchValueState = atom({
   key: "usersSearchValue",
   default: "",
