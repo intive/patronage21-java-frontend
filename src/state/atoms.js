@@ -1,5 +1,4 @@
 import { atom, atomFamily, selectorFamily } from "recoil";
-import { userEdit } from "../mocks/userEdit";
 import { HOME_DROPDOWN_DEFAULT_VALUE } from "../config/Constants";
 
 export const activeViewState = atom({
@@ -19,7 +18,7 @@ export const techGroupSelectValueState = atom({
 
 export const currentUserState = atom({
   key: "currentUser",
-  default: userEdit,
+  default: {},
 });
 
 export const userProperty = atomFamily({

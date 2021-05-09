@@ -6,7 +6,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 import GroupList from "../UI/GroupList";
-import { activeViewState } from "../../state/atoms";
+import { activeViewState, userProperty } from "../../state/atoms";
 import styled from "styled-components";
 
 const UserListItem = styled(ListItem)`
@@ -17,14 +17,18 @@ const UserListItem = styled(ListItem)`
 `;
 
 function UserList(props) {
+  const setLogin = useSetRecoilState(userProperty("login"));
   const setActiveView = useSetRecoilState(activeViewState);
-  const handleClick = () => setActiveView("user");
+  const handleClick = (login) => () => {
+    setActiveView("user");
+    setLogin(login);
+  };
 
   const createListItem = (user, index, users) => (
     <UserListItem
       key={user.login}
       divider={index !== users.length - 1}
-      onClick={handleClick}
+      onClick={handleClick(user.login)}
     >
       <ListItemAvatar>
         <Avatar />
