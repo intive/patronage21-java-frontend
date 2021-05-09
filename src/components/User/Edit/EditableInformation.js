@@ -8,7 +8,7 @@ const Bio = styled.p`
   padding-left: 15px;
   padding-right: 15px;
   word-break: "keep-all";
-  ${({ theme }) => theme.breakpoints.up('md')} {
+  ${({ theme }) => theme.breakpoints.up("md")} {
     column-count: 2;
   }
 `;
@@ -22,7 +22,7 @@ function EditableInformation() {
   const editableBio = () => (
     <TextField
       value={bio}
-      style={{padding: '10px'}}
+      style={{ padding: "10px" }}
       multiline={true}
       fullWidth={true}
       onChange={handleChange}

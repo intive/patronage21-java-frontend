@@ -1,13 +1,13 @@
 import React from "react";
 import App from "./views/App";
 import ReactDOM from "react-dom";
-import Home from "./views/Home";
-import UserEdit from "./views/UserEdit";
+import { RecoilRoot } from "recoil";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App Component={Home} />
-    <App Component={UserEdit} />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );

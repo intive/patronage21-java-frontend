@@ -1,19 +1,36 @@
 import React from "react";
+import { useSetRecoilState } from "recoil";
 import PropTypes from "prop-types";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 import GroupList from "../UI/GroupList";
+import { activeViewState } from "../../state/atoms";
+import styled from "styled-components";
+
+const UserListItem = styled(ListItem)`
+  &:hover {
+    background-color: ${({ theme }) =>
+      theme.customPalette.colors.listItemHovered};
+  }
+`;
 
 function UserList(props) {
+  const setActiveView = useSetRecoilState(activeViewState);
+  const handleClick = () => setActiveView("user");
+
   const createListItem = (user, index, users) => (
-    <ListItem key={user.email} divider={index !== users.length - 1}>
+    <UserListItem
+      key={user.login}
+      divider={index !== users.length - 1}
+      onClick={handleClick}
+    >
       <ListItemAvatar>
         <Avatar />
       </ListItemAvatar>
       <ListItemText primary={user.firstName + " " + user.lastName} />
-    </ListItem>
+    </UserListItem>
   );
 
   const users = props.list.map((user, index) =>
