@@ -71,3 +71,17 @@ export const updateUser = async (updatedUser) => {
     console.error(error);
   }
 };
+
+export const getUser = async (login) => {
+  try {
+    const response = await api.get(`/users/${login}`);
+    if (response.err) {
+      console.error(response.err);
+      return {};
+    }
+    return response.body.user;
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+};

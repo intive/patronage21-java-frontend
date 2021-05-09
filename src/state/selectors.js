@@ -1,6 +1,6 @@
 import { selector, selectorFamily } from "recoil";
 import { usersSearchValueState, currentUserState, userProperty } from "./atoms";
-import { getTechGroups, getUsers, updateUser } from "../client/client";
+import { getTechGroups, getUsers, updateUser, getUser } from "../client/client";
 
 export const usersQuery = selectorFamily({
   key: "users",
@@ -14,6 +14,15 @@ export const usersQuery = selectorFamily({
 export const techGroupsQuery = selector({
   key: "techGroups",
   get: () => getTechGroups(),
+});
+
+export const userQuery = selectorFamily({
+  key: "user",
+  get:
+    (login) =>
+    ({ get }) => {
+      return getUser(login);
+    },
 });
 
 export const updateUserQuery = selector({
