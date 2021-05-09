@@ -1,27 +1,26 @@
-import React from "react";
-import GroupTitle from "../components/UI/GroupTitle";
+import React, { Suspense } from "react";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import EditableUserHeader from "../components/User/Edit/EditableUserHeader";
-import EditableProjectsList from "../components/User/Edit/EditableProjectsList";
-import EditableContact from "../components/User/Edit/EditableContact";
-import EditableInformation from "../components/User/Edit/EditableInformation";
-import UserEditButtons from "../components/User/Edit/UserEditButtons";
-import { USER_BIO_TITLE } from "../config/Constants";
+import User from "../components/User/User";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const circularProgress = (
+  <Box
+    display="flex"
+    width="100%"
+    height="100%"
+    alignItems="center"
+    justifyContent="center"
+  >
+    <CircularProgress size={20} />
+  </Box>
+);
 
 function UserEdit() {
   return (
     <>
-      <EditableUserHeader />
-      <GroupTitle>{USER_BIO_TITLE}</GroupTitle>
-      <EditableInformation />
-      <Box my={5}>
-        <Grid container spacing={3}>
-          <EditableProjectsList/>
-          <EditableContact />
-          <UserEditButtons />
-        </Grid>
-      </Box>
+      <Suspense fallback={circularProgress}>
+        <User />
+      </Suspense>
     </>
   );
 }
