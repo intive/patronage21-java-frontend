@@ -1,5 +1,4 @@
 import { atom, atomFamily, selectorFamily } from "recoil";
-import { userEdit } from "../mocks/userEdit";
 
 export const activeViewState = atom({
   key: "activeView",
@@ -18,7 +17,7 @@ export const techGroupSelectValueState = atom({
 
 export const currentUserState = atom({
   key: "currentUser",
-  default: userEdit,
+  default: {},
 });
 
 export const userProperty = atomFamily({
