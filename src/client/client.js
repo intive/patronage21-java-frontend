@@ -1,10 +1,9 @@
 import { techGroups } from "../mocks/techGroups";
-import { config } from "../config/Config";
 
 const Frisbee = require("frisbee");
 
 const api = new Frisbee({
-  baseURI: config.API_URL,
+  baseURI: process.env.REACT_APP_USER_MODULE_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

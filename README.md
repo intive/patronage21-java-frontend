@@ -24,6 +24,11 @@ System powinien wyświetlić wersję Node.js i npm
 cd patronage21-java-frontend
 npm ci
 ```
+
+4) Stworzyć plik '.env' w który będzie podana ścieżka do integracja z systemami
+```
+REACT_APP_USER_MODULE_URL= Adres modułu użytkownika
+```
 ## Wymagania
 - Node.js 12+
 - npm 6+
