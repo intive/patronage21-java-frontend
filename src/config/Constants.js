@@ -6,6 +6,7 @@ export const HOME_SEARCH_PLACEHOLDER = "Szukaj użytkownika";
 export const HOME_SEARCH_ARIA_LABEL = "search user";
 export const HOME_LIST_LEADERS_TITLE = "Liderzy";
 export const HOME_LIST_CANDIDATES_TITLE = "Uczestnicy";
+export const HOME_DROPDOWN_DEFAULT_VALUE = "Wszystkie grupy technologiczne";
 export const USER_CONTACT_TITLE = "Kontakt";
 export const USER_CONTACT_BUTTON_MAIL = "Wyślij wiadomość";
 export const USER_CONTACT_BUTTON_PHONE = "Zadzwoń";

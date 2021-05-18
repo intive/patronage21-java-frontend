@@ -14,8 +14,8 @@ const useStyles = makeStyles({
 function SelectInput(props) {
   const classes = useStyles();
   const items = props.list.map((item) => (
-    <MenuItem value={item.value} key={item.value}>
-      {item.name}
+    <MenuItem value={item} key={item}>
+      {item}
     </MenuItem>
   ));
 
@@ -33,18 +33,13 @@ function SelectInput(props) {
 }
 
 SelectInput.propTypes = {
-  techGroups: PropTypes.array.isRequired,
+  list: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 
 SelectInput.defaultProps = {
-  techGroups: [
-    {
-      value: "-",
-      name: "-",
-    },
-  ],
+  list: [],
   value: "all",
 };
 
