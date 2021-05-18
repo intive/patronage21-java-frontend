@@ -28,10 +28,6 @@ ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,
 };
 
-ProjectsList.defaultProps = {
-  projects: [],
-};
-
 export default ProjectsList;
 
 function generateListItems(list) {

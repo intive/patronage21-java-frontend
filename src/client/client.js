@@ -23,14 +23,14 @@ export const getUsers = async (role, searchedUserData) => {
         return accumulator;
       }, {});
 
-    const response = await api.get("/users", {
+    const res = await api.get("/users", {
       body: { ...params, role: role },
     });
-    if (response.err) {
-      console.error(response.err);
+    if (res.err) {
+      console.error(res.err);
       return [];
     }
-    return response.body.users;
+    return res.body.users;
   } catch (error) {
     console.error(error);
     return [];
@@ -52,27 +52,13 @@ export const updateUser = async (updatedUser) => {
       accumulator[param] = updatedUser[param];
       return accumulator;
     }, {});
-    const response = await api.put("/users", {
+    const res = await api.put("/users", {
       body: params,
     });
-    if (response.err) {
-      console.error(response.err);
+    if (res.err) {
+      console.error(res.err);
     }
   } catch (error) {
     console.error(error);
-  }
-};
-
-export const getUser = async (login) => {
-  try {
-    const response = await api.get("/users/" + login, {});
-    if (response.err) {
-      console.error(response.err);
-      return {};
-    }
-    return response.body.user;
-  } catch (error) {
-    console.error(error);
-    return {};
   }
 };
