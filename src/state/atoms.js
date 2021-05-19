@@ -6,6 +6,21 @@ export const activeViewState = atom({
   default: "home",
 });
 
+export const alertFrameVisibleState = atom({
+  key: "alertFrameVisible",
+  default: false,
+});
+
+export const lastResponseState = atom({
+  key: "lastRespose",
+  default: {},
+});
+
+export const alertState = atom({
+  key: "alert",
+  default: {},
+});
+
 export const usersSearchValueState = atom({
   key: "usersSearchValue",
   default: "",

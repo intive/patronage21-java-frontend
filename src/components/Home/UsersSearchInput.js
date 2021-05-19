@@ -1,5 +1,5 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import { usersSearchValueState } from "../../state/atoms";
 import SearchInput from "../UI/SearchInput";
 import {
@@ -8,14 +8,19 @@ import {
 } from "../../config/Constants";
 
 function UsersSearchInput() {
-  const [searchValue, setSearchValue] = useRecoilState(usersSearchValueState);
-  const handleChange = (e) => setSearchValue(e.target.value);
+  const setGlobalSearchValue = useSetRecoilState(usersSearchValueState);
+  const [value, setValue] = useState("");
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setValue(value);
+    if (value.length !== 1) setGlobalSearchValue(value);
+  };
 
   return (
     <SearchInput
       placeholder={HOME_SEARCH_INPUT_PLACEHOLDER}
       ariaLabel={HOME_SEARCH_INPUT_ARIA_LABEL}
-      value={searchValue}
+      value={value}
       handleChange={handleChange}
     />
   );

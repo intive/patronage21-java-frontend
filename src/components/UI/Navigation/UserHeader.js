@@ -8,6 +8,9 @@ import SearchBar from "./Search";
 import AppHeader from "./AppHeader";
 import Breadcrumbs from "./Breadcrumbs";
 import DropdownMenu from "./DropdownMenu";
+import AlertFrame from "../../../components/UI/AlertFrame";
+import { useRecoilValue } from "recoil";
+import { alertFrameVisibleState } from "../../../state/atoms";
 
 const Buttons = styled.div`
   ${({ theme }) => `
@@ -23,6 +26,7 @@ const Buttons = styled.div`
 `;
 
 export default function UserHeader() {
+  const alertVisible = useRecoilValue(alertFrameVisibleState);
   return (
     <>
       <AppHeader>
@@ -36,6 +40,7 @@ export default function UserHeader() {
           <DropdownMenu />
         </Buttons>
       </AppHeader>
+      {alertVisible && <AlertFrame />}
       <Breadcrumbs />
     </>
   );

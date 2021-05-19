@@ -4,11 +4,9 @@ import CircleProgressBar from "../components/UI/CircleProgressBar";
 
 function UserEdit() {
   return (
-    <>
-      <Suspense fallback={<CircleProgressBar />}>
-        <User />
-      </Suspense>
-    </>
+    <Suspense fallback={<CircleProgressBar />}>
+      <User />
+    </Suspense>
   );
 }
 
