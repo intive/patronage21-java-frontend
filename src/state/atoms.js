@@ -21,6 +21,11 @@ export const currentUserState = atom({
   default: {},
 });
 
+export const userLoadedState = atom({
+  key: "userLoadedUser",
+  default: false,
+});
+
 export const userProperty = atomFamily({
   key: "userProperty",
   default: selectorFamily({
@@ -35,5 +40,10 @@ export const userProperty = atomFamily({
 
 export const userIsEditedState = atom({
   key: "userIsEdited",
+  default: false,
+});
+
+export const viewChangedState = atom({
+  key: "viewChanged",
   default: false,
 });

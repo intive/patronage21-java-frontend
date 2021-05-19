@@ -8,22 +8,23 @@ import EditableContact from "../User/Edit/EditableContact";
 import EditableInformation from "../User/Edit/EditableInformation";
 import UserEditButtons from "../User/Edit/UserEditButtons";
 import { USER_BIO_TITLE } from "../../config/Constants";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { userQuery } from "../../state/selectors";
-import { currentUserState, userProperty } from "../../state/atoms";
+import { currentUserState, userLoadedState } from "../../state/atoms";
 
 function User() {
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const login = useRecoilValue(userProperty("login"));
-  const user = useRecoilValue(userQuery(login));
+  const setCurrentUser = useSetRecoilState(currentUserState);
+  const [userLoaded, setUserLoaded] = useRecoilState(userLoadedState);
+  const user = useRecoilValue(userQuery);
 
   useEffect(() => {
     setCurrentUser(user);
-  }, [user, setCurrentUser]);
+    setUserLoaded(true);
+  }, [user, setCurrentUser, setUserLoaded]);
 
   return (
     <>
-      {currentUser.login && (
+      {userLoaded && (
         <>
           <EditableUserHeader />
           <GroupTitle>{USER_BIO_TITLE}</GroupTitle>

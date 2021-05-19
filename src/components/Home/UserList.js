@@ -1,16 +1,23 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import PropTypes from "prop-types";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 import GroupList from "../UI/GroupList";
-import { activeViewState, userProperty } from "../../state/atoms";
+import {
+  activeViewState,
+  userProperty,
+  usersSearchValueState,
+  techGroupSelectValueState,
+  viewChangedState,
+} from "../../state/atoms";
 import styled from "styled-components";
 
 const UserListItem = styled(ListItem)`
   &:hover {
+    cursor: pointer;
     background-color: ${({ theme }) =>
       theme.customPalette.colors.listItemHovered};
   }
@@ -19,9 +26,18 @@ const UserListItem = styled(ListItem)`
 function UserList(props) {
   const setLogin = useSetRecoilState(userProperty("login"));
   const setActiveView = useSetRecoilState(activeViewState);
+  const setViewChanged = useSetRecoilState(viewChangedState);
+  const resetUsersSearchValue = useResetRecoilState(usersSearchValueState);
+  const resetTechGroupSelectValue = useResetRecoilState(
+    techGroupSelectValueState
+  );
+
   const handleClick = (login) => () => {
-    setActiveView("user");
     setLogin(login);
+    setActiveView("user");
+    setViewChanged(true);
+    resetUsersSearchValue();
+    resetTechGroupSelectValue();
   };
 
   const createListItem = (user, index, users) => (

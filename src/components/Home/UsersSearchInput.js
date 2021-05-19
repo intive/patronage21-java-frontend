@@ -3,8 +3,8 @@ import { useRecoilState } from "recoil";
 import { usersSearchValueState } from "../../state/atoms";
 import SearchInput from "../UI/SearchInput";
 import {
-  HOME_SEARCH_PLACEHOLDER,
-  HOME_SEARCH_ARIA_LABEL,
+  HOME_SEARCH_INPUT_PLACEHOLDER,
+  HOME_SEARCH_INPUT_ARIA_LABEL,
 } from "../../config/Constants";
 
 function UsersSearchInput() {
@@ -13,8 +13,8 @@ function UsersSearchInput() {
 
   return (
     <SearchInput
-      placeholder={HOME_SEARCH_PLACEHOLDER}
-      ariaLabel={HOME_SEARCH_ARIA_LABEL}
+      placeholder={HOME_SEARCH_INPUT_PLACEHOLDER}
+      ariaLabel={HOME_SEARCH_INPUT_ARIA_LABEL}
       value={searchValue}
       handleChange={handleChange}
     />
