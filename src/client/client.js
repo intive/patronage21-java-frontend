@@ -35,14 +35,16 @@ export const getUsers = async (role, searchedUserData) => {
     const response = await api.get("/users", {
       body: { ...params, role: role },
     });
-    if (response.err) {
-      console.error(response.err);
-      return [];
+    console.log(response);
+    if (response.body.users) {
+      return response;
+    } else {
+      response.body.users = [];
+      return response;
     }
-    return response.body.users;
   } catch (error) {
-    console.error(error);
-    return [];
+    const response = { error, body: { users: [] } };
+    return response;
   }
 };
 
@@ -67,6 +69,7 @@ export const updateUser = async (updatedUser) => {
     if (response.err) {
       console.error(response.err);
     }
+    return response;
   } catch (error) {
     console.error(error);
   }

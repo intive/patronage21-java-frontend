@@ -1,5 +1,15 @@
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userIsEditedState, currentUserState } from "../../../state/atoms";
+import {
+  userIsEditedState,
+  currentUserState,
+  alertFrameVisibleState,
+} from "../../../state/atoms";
+import {
+  setCurrentUserState,
+  cancelUserEdition,
+  setLastResponseState,
+} from "../../../state/selectors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -9,11 +19,8 @@ import {
   DEACTIVATE_PROFILE_BTN_TEXT,
   CANCEL_BTN_TEXT,
 } from "../../../config/Constants";
-import {
-  updateUserQuery,
-  cancelUserEditionQuery,
-} from "../../../state/selectors";
-import { deactivateUserByLogin } from "../../../client/client";
+import { deactivateUserByLogin, updateUser } from "../../../client/client";
+import { checkEditionAlerts } from "../../../alerts/alertSelectors";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -26,18 +33,59 @@ const useStyles = makeStyles(() => ({
 
 function UserEditButtons() {
   const classes = useStyles();
-  const [edited, setEdited] = useRecoilState(userIsEditedState);
-  const updateUser = useSetRecoilState(updateUserQuery);
-  const cancelEdition = useSetRecoilState(cancelUserEditionQuery);
+  const cancelEdition = useSetRecoilState(cancelUserEdition);
   const currentUser = useRecoilValue(currentUserState);
+  const [updateBtnClicked, setUpdateBtnClicked] = useState(false);
+  const [edited, setEdited] = useRecoilState(userIsEditedState);
+  const setCurrentUser = useSetRecoilState(setCurrentUserState);
+  const setResponse = useSetRecoilState(setLastResponseState);
+  const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
+  const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
+  const prevCurrentUserRef = useRef();
+  const prevCurrentUser = prevCurrentUserRef.current;
 
+  useEffect(() => (prevCurrentUserRef.current = { ...currentUser }));
   const deactivate = () => deactivateUserByLogin(currentUser.login);
-  const enableEdition = () => setEdited(true);
 
   const confirmUpdate = () => {
-    updateUser();
-    setEdited(false);
+    setCurrentUser();
+    setUpdateBtnClicked(true);
   };
+
+  const enableEdition = () => {
+    setEdited(true);
+    setAlertFrameVisibleState(false);
+  };
+
+  const isUserDataUpdated = useCallback(() => {
+    let userDataUpdated = false;
+    if (currentUser && prevCurrentUser) {
+      userDataUpdated = Object.keys(currentUser).some(
+        (key) => currentUser[key] !== prevCurrentUser[key]
+      );
+    }
+    return userDataUpdated;
+  }, [currentUser, prevCurrentUser]);
+
+  const sendUserIfUpdated = useCallback(async () => {
+    if (isUserDataUpdated()) {
+      const response = await updateUser(currentUser);
+      setResponse(response);
+    } else {
+      setResponse({ status: "sameData", body: "" });
+    }
+  }, [currentUser, setResponse, isUserDataUpdated]);
+
+  useEffect(
+    () => async () => {
+      if (updateBtnClicked) {
+        await sendUserIfUpdated();
+        setEditionAlerts("edition");
+        setUpdateBtnClicked(false);
+      }
+    },
+    [updateBtnClicked, sendUserIfUpdated, setEditionAlerts]
+  );
 
   const itemButton = (color, buttonText, functionOnClick) => (
     <Grid item xs={12} key={buttonText}>

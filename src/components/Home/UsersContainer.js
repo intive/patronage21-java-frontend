@@ -15,13 +15,13 @@ function UsersContainer() {
             <UsersSearchInput />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Suspense fallback={<CircleProgressBar/>}>
+            <Suspense fallback={<CircleProgressBar />}>
               <TechGroupSelectInput />
             </Suspense>
           </Grid>
         </Grid>
       </Box>
-      <Suspense fallback={<CircleProgressBar/>}>
+      <Suspense fallback={<CircleProgressBar />}>
         <UserListsContainer />
       </Suspense>
     </>

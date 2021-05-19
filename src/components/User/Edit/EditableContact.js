@@ -39,18 +39,21 @@ function EditableContact() {
       key: "email",
       value: email,
       setter: setEmail,
+      type: "email",
       buttonText: USER_CONTACT_BUTTON_MAIL,
     },
     {
       key: "phone",
       value: phone,
       setter: setPhone,
+      type: "number",
       buttonText: USER_CONTACT_BUTTON_PHONE,
     },
     {
       key: "github",
       value: github,
       setter: setGithub,
+      type: "url",
       buttonText: USER_CONTACT_BUTTON_GITHUB,
     },
   ];
@@ -85,6 +88,7 @@ function EditableContact() {
       <TextField
         value={property.value}
         onChange={setContactProperty(property.setter)}
+        type={property.type}
       />
     </ListItem>
   ));

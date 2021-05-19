@@ -1,9 +1,11 @@
 import { selector, selectorFamily } from "recoil";
-import { getTechGroups, getUsers, updateUser, getUser } from "../client/client";
+import { getTechGroups, getUsers, getUser } from "../client/client";
 import {
   usersSearchValueState,
   currentUserState,
   userProperty,
+  lastResponseState,
+  alertFrameVisibleState,
   userIsEditedState,
 } from "./atoms";
 
@@ -25,24 +27,49 @@ export const userQuery = selector({
   get: ({ get }) => getUser(get(userProperty("login"))),
 });
 
-export const updateUserQuery = selector({
-  key: "updateUser",
+export const setCurrentUserState = selector({
+  key: "setCurrentUserState",
   set: ({ get, set }) => {
     const updatedUser = {};
     Object.keys(get(currentUserState)).forEach(
       (key) => (updatedUser[key] = get(userProperty(key)))
     );
     set(currentUserState, updatedUser);
-    updateUser(updatedUser);
   },
 });
 
-export const cancelUserEditionQuery = selector({
+export const cancelUserEdition = selector({
   key: "cancelUserEdition",
   set: ({ get, set }) => {
     Object.keys(get(currentUserState)).forEach((key) =>
       set(userProperty(key), get(currentUserState)[key])
     );
     set(userIsEditedState, false);
+    set(alertFrameVisibleState, false);
+  },
+});
+
+export const setLastResponseState = selector({
+  key: "setLastResponseState",
+  set: ({ set }, response) => {
+    let status, body;
+    if (response.status) {
+      status = response.status;
+      body = response.body;
+    } else if (response.error.message) {
+      status = "error";
+      body = response.error.message;
+    }
+    set(lastResponseState, { status, body });
+  },
+});
+
+export const setUserProperties = selector({
+  key: "setUserProperties",
+  set: ({ get, set }) => {
+    const currentUser = get(currentUserState);
+    Object.keys(currentUser).forEach((key) =>
+      set(userProperty(key), currentUser[key])
+    );
   },
 });
