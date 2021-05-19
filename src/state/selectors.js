@@ -20,13 +20,9 @@ export const techGroupsQuery = selector({
   get: () => getTechGroups(),
 });
 
-export const userQuery = selectorFamily({
+export const userQuery = selector({
   key: "user",
-  get:
-    (login) =>
-    ({ get }) => {
-      return getUser(login);
-    },
+  get: ({ get }) => getUser(get(userProperty("login"))),
 });
 
 export const updateUserQuery = selector({
