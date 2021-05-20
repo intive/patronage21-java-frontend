@@ -85,3 +85,16 @@ export const getUser = async (login) => {
     return {};
   }
 };
+
+export const deactivateUserByLogin = async (login) => {
+  try {
+    const response = await api.patch(`/users/${login}/deactivate`);
+    if (response.err) {
+      console.error(response.err);
+    }
+    return response.body.user;
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+};

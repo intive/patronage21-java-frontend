@@ -1,5 +1,5 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { userIsEditedState } from "../../../state/atoms";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { userIsEditedState, currentUserState } from "../../../state/atoms";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -13,6 +13,7 @@ import {
   updateUserQuery,
   cancelUserEditionQuery,
 } from "../../../state/selectors";
+import { deactivateUserByLogin } from "../../../client/client";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -24,23 +25,27 @@ const useStyles = makeStyles(() => ({
 }));
 
 function UserEditButtons() {
+  const classes = useStyles();
   const [edited, setEdited] = useRecoilState(userIsEditedState);
   const updateUser = useSetRecoilState(updateUserQuery);
   const cancelEdition = useSetRecoilState(cancelUserEditionQuery);
-  const classes = useStyles();
+  const currentUser = useRecoilValue(currentUserState);
 
-  const handleClick = (edition, functionOnClick) => (event) => {
-    setEdited(edition);
-    if (functionOnClick !== undefined) functionOnClick();
+  const deactivate = () => deactivateUserByLogin(currentUser.login);
+  const enableEdition = () => setEdited(true);
+
+  const confirmUpdate = () => {
+    updateUser();
+    setEdited(false);
   };
 
-  const itemButton = (color, buttonText, edition, functionOnClick) => (
+  const itemButton = (color, buttonText, functionOnClick) => (
     <Grid item xs={12} key={buttonText}>
       <Button
         className={classes.button}
         variant={"contained"}
         color={color}
-        onClick={handleClick(edition, functionOnClick)}
+        onClick={functionOnClick}
       >
         {buttonText}
       </Button>
@@ -52,11 +57,11 @@ function UserEditButtons() {
       <Grid container spacing={2} direction={"column"}>
         {edited
           ? [
-              itemButton("secondary", APPROVE_BTN_TEXT, false, updateUser),
-              itemButton("secondary", CANCEL_BTN_TEXT, false, cancelEdition),
+              itemButton("secondary", APPROVE_BTN_TEXT, confirmUpdate),
+              itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
             ]
-          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, true)}
-        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, edited)}
+          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, enableEdition)}
+        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
       </Grid>
     </Grid>
   );
