@@ -1,14 +1,18 @@
 import { selector, selectorFamily } from "recoil";
-import { usersSearchValueState, currentUserState, userProperty } from "./atoms";
 import { getTechGroups, getUsers, updateUser, getUser } from "../client/client";
+import {
+  usersSearchValueState,
+  currentUserState,
+  userProperty,
+  userIsEditedState,
+} from "./atoms";
 
 export const usersQuery = selectorFamily({
   key: "users",
   get:
     (role) =>
-    ({ get }) => {
-      return getUsers(role, get(usersSearchValueState));
-    },
+    ({ get }) =>
+      getUsers(role, get(usersSearchValueState)),
 });
 
 export const techGroupsQuery = selector({
@@ -43,5 +47,6 @@ export const cancelUserEditionQuery = selector({
     Object.keys(get(currentUserState)).forEach((key) =>
       set(userProperty(key), get(currentUserState)[key])
     );
+    set(userIsEditedState, false);
   },
 });
