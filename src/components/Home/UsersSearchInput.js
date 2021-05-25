@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useSetRecoilState } from "recoil";
+import throttle from "lodash/debounce";
 import { usersSearchValueState } from "../../state/atoms";
 import SearchInput from "../UI/SearchInput";
 import {
   HOME_SEARCH_INPUT_PLACEHOLDER,
   HOME_SEARCH_INPUT_ARIA_LABEL,
+  HOME_SEARCH_THROTTLE_TIME,
 } from "../../config/Constants";
 
 function UsersSearchInput() {
   const setGlobalSearchValue = useSetRecoilState(usersSearchValueState);
   const [value, setValue] = useState("");
-  const handleChange = (e) => {
-    const value = e.target.value;
+
+  const throttledSearch = useMemo(
+    () =>
+      throttle(
+        (value) => setGlobalSearchValue(value),
+        HOME_SEARCH_THROTTLE_TIME
+      ),
+    [setGlobalSearchValue]
+  );
+
+  const handleChange = (event) => {
+    const value = event.target.value;
     setValue(value);
-    if (value.length !== 1) setGlobalSearchValue(value);
+    if (value.length !== 1) {
+      throttledSearch(value);
+    }
   };
 
   return (
