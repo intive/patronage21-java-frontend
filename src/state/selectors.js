@@ -1,7 +1,6 @@
 import { selector, selectorFamily } from "recoil";
 import { getTechGroups, getUsers, getUser } from "../client/client";
 import {
-  usersSearchValueState,
   currentUserState,
   userProperty,
   lastResponseState,
@@ -11,10 +10,7 @@ import {
 
 export const usersQuery = selectorFamily({
   key: "users",
-  get:
-    (role) =>
-    ({ get }) =>
-      getUsers(role, get(usersSearchValueState)),
+  get: (role) => () => getUsers(role),
 });
 
 export const techGroupsQuery = selector({

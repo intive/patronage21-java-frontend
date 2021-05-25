@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { usersQuery, setLastResponseState } from "../../state/selectors";
-import { activeViewState, viewChangedState } from "../../state/atoms";
+import {
+  activeViewState,
+  viewChangedState,
+  usersSearchValueState,
+  techGroupSelectValueState,
+} from "../../state/atoms";
 import { checkSearchAlerts } from "../../alerts/alertSelectors";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -27,28 +32,33 @@ export const NoResults = styled.div`
 function UserListsContainer() {
   const activeView = useRecoilValue(activeViewState);
   const viewChanged = useRecoilValue(viewChangedState);
+  const searchedUserData = useRecoilValue(usersSearchValueState);
+  const selectedGroup = useRecoilValue(techGroupSelectValueState);
   const [usersLoaded, setUsersLoaded] = useState(true);
   const setResponse = useSetRecoilState(setLastResponseState);
   const setSearchAlerts = useSetRecoilState(checkSearchAlerts);
+  const firstUpdate = useRef(true);
   const [candidatesResponse, setCandidatesResponse] = useState(
     useRecoilValue(usersQuery(ROLE_CANDIDATE))
   );
   const [leadersResponse, setLeadersResponse] = useState(
     useRecoilValue(usersQuery(ROLE_LEADER))
   );
-  
 
   useEffect(() => {
-    if (viewChanged) {
-      setUsersLoaded(false);
-      async function fetchUsers() {
-        setCandidatesResponse(await getUsers(ROLE_CANDIDATE));
-        setLeadersResponse(await getUsers(ROLE_LEADER));
-        setUsersLoaded(true);
-      }
-      fetchUsers();
+    if (firstUpdate.current && !viewChanged) {
+      firstUpdate.current = false;
+      return;
     }
-  }, [activeView, viewChanged]);
+    setUsersLoaded(false);
+    async function fetchUsers() {
+      const searchParams = [searchedUserData, selectedGroup];
+      setCandidatesResponse(await getUsers(ROLE_CANDIDATE, ...searchParams));
+      setLeadersResponse(await getUsers(ROLE_LEADER, ...searchParams));
+      setUsersLoaded(true);
+    }
+    fetchUsers();
+  }, [activeView, viewChanged, searchedUserData, selectedGroup]);
 
   useEffect(() => {
     setResponse(candidatesResponse);
