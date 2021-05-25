@@ -1,3 +1,4 @@
+import { HOME_DROPDOWN_DEFAULT_VALUE } from "../config/Constants";
 const Frisbee = require("frisbee");
 
 const api = new Frisbee({
@@ -23,19 +24,18 @@ export const getTechGroups = async () => {
   }
 };
 
-export const getUsers = async (role, searchedUserData) => {
+export const getUsers = async (role, searchedUserData, group) => {
   try {
-    const params = ["firstName", "lastName", "username"]
-      .filter(() => searchedUserData)
-      .reduce((accumulator, param) => {
-        accumulator[param] = searchedUserData;
-        return accumulator;
-      }, {});
-
+    let params;
+    if (searchedUserData && searchedUserData.length > 0) {
+      params = { other: searchedUserData };
+    }
+    if (group && group !== HOME_DROPDOWN_DEFAULT_VALUE) {
+      params = { technologyGroup: group, ...params };
+    }
     const response = await api.get("/users", {
-      body: { ...params, role: role },
+      body: { role: role, ...params },
     });
-    console.log(response);
     if (response.body.users) {
       return response;
     } else {

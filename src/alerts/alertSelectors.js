@@ -27,7 +27,6 @@ export const checkSearchAlerts = selector({
     const lastAlertCaller = get(alertState).caller;
     const alert = {};
 
-    console.log(get(lastResponseState), get(alertState), caller);
     switch (status) {
       case 200:
       case 422:
@@ -88,7 +87,6 @@ export const checkEditionAlerts = selector({
 });
 
 const checkCommonErrors = (status, content, alert) => {
-  status = 500;
   switch (status) {
     case "error":
       setAlert(alert, ERROR, APP_ERROR_MSG, content);

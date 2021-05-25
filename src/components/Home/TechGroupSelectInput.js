@@ -13,7 +13,9 @@ function TechGroupSelectInput() {
   const [allTechGroups, setAllTechGroups] = useState([
     HOME_DROPDOWN_DEFAULT_VALUE,
   ]);
-  const handleChange = (e) => setSelectValue(e.target.value);
+  const handleChange = (event) => {
+    setSelectValue(event.target.value);
+  };
 
   useEffect(() => {
     const groups = [HOME_DROPDOWN_DEFAULT_VALUE, ...techGroups];
