@@ -17,6 +17,7 @@ export const HOME_INFO = "Poniżej wylistowani zostali użytkownicy Patronage";
 export const HOME_SEARCH_INPUT_PLACEHOLDER = "Szukaj użytkownika";
 export const HOME_SEARCH_INPUT_ARIA_LABEL = "search user";
 export const HOME_SEARCH_NO_RESULTS = "Brak wyników";
+export const HOME_SEARCH_THROTTLE_TIME = 800;
 export const HOME_LIST_LEADERS_TITLE = "Liderzy";
 export const HOME_LIST_CANDIDATES_TITLE = "Uczestnicy";
 export const HOME_DROPDOWN_DEFAULT_VALUE = "Wszystkie grupy technologiczne";
