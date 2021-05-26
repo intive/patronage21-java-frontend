@@ -1,3 +1,5 @@
+import { MAX_IMAGE_SIZE } from "../config/Constants";
+
 export const ERROR = "error";
 export const SUCCESS = "success";
 export const INFO = "info";
@@ -11,3 +13,4 @@ export const DATA_UPDATED_MSG = "Dane zostały pomyślnie zaktualizowane";
 export const IMAGE_UPDATED_MSG = "Zdjęcie zostało pomyślnie zaktualizowane";
 export const SERVER_ERROR_MSG = "Błąd po stronie serwera";
 export const INVALID_IMAGE_FORMAT_MSG = "Nieprawidłowy format zdjęcia";
+export const IMAGE_SIZE_EXCEEDED_MSG = `Zdjęcie przekracza maksymalny dozwolony rozmiar ${MAX_IMAGE_SIZE} bajtów`;
