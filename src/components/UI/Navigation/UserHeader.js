@@ -29,7 +29,7 @@ export default function UserHeader() {
   const alertVisible = useRecoilValue(alertFrameVisibleState);
   return (
     <>
-      <AppHeader>
+      <AppHeader useLogoRedirect>
         <SearchBar>
           <SearchIcon />
         </SearchBar>
