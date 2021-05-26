@@ -36,6 +36,8 @@ export const DEACTIVATE_PROFILE_BTN_TEXT = "Dezaktywuj profil";
 export const APPROVE_BTN_TEXT = "Zatwierdź";
 export const EDIT_PROFILE_BTN_TEXT = "Edytuj profil";
 export const CANCEL_BTN_TEXT = "Anuluj";
+export const BACK_BTN_TEXT = "Wróć";
+export const ERROR_PAGE_GENERAL_TITLE = "Wystąpił błąd";
 export const USER_PROPERTIES = {
   login: "Login",
   firstName: "Imię",

@@ -29,6 +29,13 @@ npm ci
 ```
 REACT_APP_USER_MODULE_URL= Adres modułu użytkownika
 ```
+
+## Generowanie statycznych stron błędów
+Aby wygenerować statyczne strony błędów należy użyć polecenia (wymagane są zainstalowane niezbędne pakiety - npm ci):
+```
+npm run-script generate-error-pages
+```
+
 ## Wymagania
 - Node.js 12+
 - npm 6+

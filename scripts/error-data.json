@@ -1,0 +1,58 @@
+[
+  {
+    "status": 400,
+    "body": "Nieprawidłowe żądanie, które zostało odrzucone przez serwer"
+  },
+  {
+    "status": 401,
+    "body": "Nieautoryzowany dostęp. Zawartość docelowa nie zawiera prawidłowego poświadczenia uwierzytelniającego"
+  },
+  {
+    "status": 403,
+    "body": "Brak uprawnień dostępu do zawartości"
+  },
+  {
+    "status": 404,
+    "body": "Strona o podanym adresie nie została odnaleziona"
+  },
+  {
+    "status": 405,
+    "body": "Zasób istnieje, ale użyto niedozowolonej metody HTTP"
+  },
+  {
+    "status": 408,
+    "body": "Serwer przekroczył limit czasu oczekiwania na pełne żądanie przeglądarki"
+  },
+  {
+    "status": 410,
+    "body": "Żądany zasób nie istnieje"
+  },
+  {
+    "status": 429,
+    "body": "Wysłano zbyt wiele żądań"
+  },
+  {
+    "status": 499,
+    "body": "Zamknięcie żądania w trakcie przetwarzania go przez serwer"
+  },
+  {
+    "status": 500,
+    "body": "Wewnętrzny błąd serwera"
+  },
+  {
+    "status": 501,
+    "body": "Serwer nie obsługuje funkcji wymaganej do spełnienia żądania"
+  },
+  {
+    "status": 502,
+    "body": "serwer otrzymał niepoprawną odpowiedź z innego serwera"
+  },
+  {
+    "status": 503,
+    "body": "Żądanie nie może być aktualnie wykonane przez problem z hostem"
+  },
+  {
+    "status": 504,
+    "body": "Przetwarzane żądanie nie zostało wykonane, ponieważ pierwszy serwer przekroczył limit czasu oczekiwania na odpowiedź drugiego serwera"
+  }
+]

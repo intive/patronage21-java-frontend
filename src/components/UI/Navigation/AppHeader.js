@@ -19,13 +19,13 @@ const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-export default function AppHeader({ children }) {
+export default function AppHeader({ children, useLogoRedirect }) {
   return (
     <Wrapper>
       <AppBar color="transparent" position="static">
         <Content>
           <StyledToolbar>
-            <Logo />
+            <Logo useLogoRedirect={useLogoRedirect} />
             {children}
           </StyledToolbar>
         </Content>
