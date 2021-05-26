@@ -10,8 +10,14 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ConfirmationDialog from "../../UI/ConfirmationDialog";
 import styled, { css } from "styled-components";
-import { IMAGE_DELETION_CONFIRMATION_MSG } from "../../../config/Constants";
-import { INVALID_IMAGE_FORMAT_MSG } from "../../../config/AlertConstants";
+import {
+  IMAGE_DELETION_CONFIRMATION_MSG,
+  MAX_IMAGE_SIZE,
+} from "../../../config/Constants";
+import {
+  INVALID_IMAGE_FORMAT_MSG,
+  IMAGE_SIZE_EXCEEDED_MSG,
+} from "../../../config/AlertConstants";
 
 const sharedImageButtonStyle = css`
   position: absolute;
@@ -43,17 +49,15 @@ function EditableImageButtons() {
   const setImageEditionAlerts = useSetRecoilState(checkImageEditionAlerts);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
-  const readAndUpdateImage = (file) => {
+  const validateAndReadImage = (file) => {
     if (isImageValid(file)) {
-      var reader = new FileReader();
-      reader.onload = function (event) {
-        updateProfileImage(file, event);
-      };
-
-      reader.readAsDataURL(file);
+      if (file.size < MAX_IMAGE_SIZE) {
+        readAndUpdateImage(file);
+      } else {
+        displayImageError(IMAGE_SIZE_EXCEEDED_MSG);
+      }
     } else {
-      setResponse({ status: 422, body: INVALID_IMAGE_FORMAT_MSG });
-      setImageEditionAlerts("imageEdition");
+      displayImageError(INVALID_IMAGE_FORMAT_MSG);
     }
   };
 
@@ -62,6 +66,19 @@ function EditableImageButtons() {
     return (
       file && allowedFormats.some((type) => file.type.match(`image/${type}`))
     );
+  };
+
+  const displayImageError = (message) => {
+    setResponse({ status: 422, body: message });
+    setImageEditionAlerts("imageEdition");
+  };
+
+  const readAndUpdateImage = (file) => {
+    var reader = new FileReader();
+    reader.onload = function (event) {
+      updateProfileImage(file, event);
+    };
+    reader.readAsDataURL(file);
   };
 
   const updateProfileImage = async (file, event) => {
@@ -90,7 +107,7 @@ function EditableImageButtons() {
   };
 
   const handleFileInputChange = (event) => {
-    readAndUpdateImage(event.target.files[0]);
+    validateAndReadImage(event.target.files[0]);
   };
 
   const cofirmDeletion = () => image !== null && setDialogOpen(true);

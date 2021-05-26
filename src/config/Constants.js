@@ -42,6 +42,7 @@ export const IMAGE_BASE64_PREFIX = "data:image/";
 export const IMAGE_BASE64_JPG_PREFIX = "data:image/jpg;base64,";
 export const IMAGE_DELETION_CONFIRMATION_MSG =
   "Czy na pewno chcesz usunąć zdjęcie?";
+export const MAX_IMAGE_SIZE = 524288;
 export const DIALOG_AGREE_BTN_TEXT = "Potwierdź";
 export const DIALOG_CANCEL_BTN_TEXT = "Anuluj";
 export const USER_PROPERTIES = {
