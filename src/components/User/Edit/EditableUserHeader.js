@@ -8,6 +8,7 @@ function EditableUserHeader() {
   const edited = useRecoilValue(userIsEditedState);
   const [firstName, setFirstName] = useRecoilState(userProperty("firstName"));
   const [lastName, setLastName] = useRecoilState(userProperty("lastName"));
+  const image = useRecoilValue(userProperty("image"));
 
   const handleChange = (setMethod) => (event) => {
     setMethod(event.target.value);
@@ -21,6 +22,7 @@ function EditableUserHeader() {
     <UserHeader
       firstName={edited ? item(firstName, setFirstName) : firstName}
       lastName={edited ? item(lastName, setLastName) : lastName}
+      image={image}
       alignItems={edited ? "baseline" : "center"}
     />
   );
