@@ -4,6 +4,7 @@ import {
   userIsEditedState,
   currentUserState,
   alertFrameVisibleState,
+  userProperty,
 } from "../../../state/atoms";
 import {
   setCurrentUserState,
@@ -18,6 +19,7 @@ import {
   EDIT_PROFILE_BTN_TEXT,
   DEACTIVATE_PROFILE_BTN_TEXT,
   CANCEL_BTN_TEXT,
+  USER_INACTIVE_STATUS,
 } from "../../../config/Constants";
 import { deactivateUserByLogin, updateUser } from "../../../client/client";
 import { checkEditionAlerts } from "../../../alerts/alertSelectors";
@@ -43,9 +45,14 @@ function UserEditButtons() {
   const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
   const prevCurrentUserRef = useRef();
   const prevCurrentUser = prevCurrentUserRef.current;
-
+  const [status,setStatus] = useRecoilState(userProperty("status"));
+  
   useEffect(() => (prevCurrentUserRef.current = { ...currentUser }));
-  const deactivate = () => deactivateUserByLogin(currentUser.login);
+  const deactivate = () => {
+    deactivateUserByLogin(currentUser.login);
+    cancelEdition();
+    setStatus(USER_INACTIVE_STATUS);
+  }
 
   const confirmUpdate = () => {
     setCurrentUser();
@@ -94,6 +101,7 @@ function UserEditButtons() {
         variant={"contained"}
         color={color}
         onClick={functionOnClick}
+        disabled={status === USER_INACTIVE_STATUS}
       >
         {buttonText}
       </Button>
@@ -109,7 +117,7 @@ function UserEditButtons() {
               itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
             ]
           : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, enableEdition)}
-        {itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
+        {status === USER_INACTIVE_STATUS ? '' : itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
       </Grid>
     </Grid>
   );

@@ -1,5 +1,8 @@
 export const ROLE_CANDIDATE = "CANDIDATE";
 export const ROLE_LEADER = "LEADER";
+export const USER_ACTIVE_STATUS = 'ACTIVE';
+export const USER_INACTIVE_STATUS = 'INACTIVE';
+
 export const BREADCRUMBS_HOME = "Strona główna";
 export const BREADCRUMBS_USERS = "Użytkownicy";
 export const MENU_ITEM_CALENDAR = "Kalendarz";
