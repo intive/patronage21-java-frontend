@@ -47,7 +47,7 @@ function UserList(props) {
       onClick={handleClick(user.login)}
     >
       <ListItemAvatar>
-        <Avatar />
+        <Avatar alt = {user.firstName} src = {"data:image/jpg;base64," + user.image}/>
       </ListItemAvatar>
       <ListItemText primary={user.firstName + " " + user.lastName} />
     </UserListItem>

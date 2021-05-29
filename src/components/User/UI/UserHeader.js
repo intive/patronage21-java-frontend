@@ -8,7 +8,14 @@ function UserHeader(props) {
   return (
     <Grid container spacing={2} direction={"row"} alignItems={props.alignItems}>
       <Grid item>
-        <Avatar />
+        <Avatar
+          alt={
+            typeof props.firstName == "string"
+              ? props.firstName
+              : props.firstName.props.value
+          }
+          src={"data:image/jpg;base64," + props.image}
+        />
       </Grid>
       <Grid item>
         <SiteHeader>
@@ -28,6 +35,7 @@ UserHeader.propTypes = {
     PropTypes.string.isRequired,
     PropTypes.object.isRequired,
   ]),
+  image: PropTypes.string,
 };
 
 UserHeader.defaultProps = {
