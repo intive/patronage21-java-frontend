@@ -2,6 +2,9 @@ export const ROLE_CANDIDATE = "CANDIDATE";
 export const ROLE_LEADER = "LEADER";
 export const USER_ACTIVE_STATUS = 'ACTIVE';
 export const USER_INACTIVE_STATUS = 'INACTIVE';
+export const USER_PROJECTS_LIMIT = 5;
+
+export const PROJECTS_LIMIT_MESSAGE = "Maksymalny limit projektów, w których można uczestniczyć w tym samym czasie, wynosi: " + USER_PROJECTS_LIMIT;
 
 export const BREADCRUMBS_HOME = "Strona główna";
 export const BREADCRUMBS_USERS = "Użytkownicy";
