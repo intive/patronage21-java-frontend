@@ -45,14 +45,14 @@ function UserEditButtons() {
   const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
   const prevCurrentUserRef = useRef();
   const prevCurrentUser = prevCurrentUserRef.current;
-  const [status,setStatus] = useRecoilState(userProperty("status"));
-  
+  const [status, setStatus] = useRecoilState(userProperty("status"));
+
   useEffect(() => (prevCurrentUserRef.current = { ...currentUser }));
   const deactivate = () => {
     deactivateUserByLogin(currentUser.login);
     cancelEdition();
     setStatus(USER_INACTIVE_STATUS);
-  }
+  };
 
   const confirmUpdate = () => {
     setCurrentUser();
@@ -67,9 +67,10 @@ function UserEditButtons() {
   const isUserDataUpdated = useCallback(() => {
     let userDataUpdated = false;
     if (currentUser && prevCurrentUser) {
-      userDataUpdated = Object.keys(currentUser).some(
-        (key) => currentUser[key] !== prevCurrentUser[key]
-      );
+      userDataUpdated = Object.keys(currentUser).some((key) => {
+        if (key === "image") return false;
+        return currentUser[key] !== prevCurrentUser[key];
+      });
     }
     return userDataUpdated;
   }, [currentUser, prevCurrentUser]);
@@ -117,7 +118,8 @@ function UserEditButtons() {
               itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
             ]
           : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, enableEdition)}
-        {status === USER_INACTIVE_STATUS ? '' : itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
+        {status !== USER_INACTIVE_STATUS &&
+          itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
       </Grid>
     </Grid>
   );

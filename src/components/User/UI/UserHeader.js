@@ -2,20 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import SiteHeader from "../../UI/SiteHeader";
-import Avatar from "@material-ui/core/Avatar";
+import EditableImage from "../Edit/EditableImage";
 
 function UserHeader(props) {
   return (
-    <Grid container spacing={2} direction={"row"} alignItems={props.alignItems}>
+    <Grid container spacing={2} direction={"row"} alignItems="center">
       <Grid item>
-        <Avatar
-          alt={
-            typeof props.firstName == "string"
-              ? props.firstName
-              : props.firstName.props.value
-          }
-          src={"data:image/jpg;base64," + props.image}
-        />
+        <EditableImage firstName={props.firstName} />
       </Grid>
       <Grid item>
         <SiteHeader>
@@ -35,11 +28,6 @@ UserHeader.propTypes = {
     PropTypes.string.isRequired,
     PropTypes.object.isRequired,
   ]),
-  image: PropTypes.string,
-};
-
-UserHeader.defaultProps = {
-  alignItems: "center",
 };
 
 export default UserHeader;

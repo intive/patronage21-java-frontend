@@ -1,12 +1,12 @@
 export const ROLE_CANDIDATE = "CANDIDATE";
 export const ROLE_LEADER = "LEADER";
-export const USER_ACTIVE_STATUS = 'ACTIVE';
-export const USER_INACTIVE_STATUS = 'INACTIVE';
+export const USER_ACTIVE_STATUS = "ACTIVE";
+export const USER_INACTIVE_STATUS = "INACTIVE";
 export const USER_PROJECTS_LIMIT = 5;
-
-export const PROJECTS_LIMIT_MESSAGE = "Maksymalny limit projektów, w których można uczestniczyć w tym samym czasie, wynosi: " + USER_PROJECTS_LIMIT;
+export const PROJECTS_LIMIT_MESSAGE =
+  "Maksymalny limit projektów, w których można uczestniczyć w tym samym czasie, wynosi: " +
+  USER_PROJECTS_LIMIT;
 export const SEARCH_TOOLTIP_MESSAGE = "Szukaj po loginie, imieniu, nazwisku";
-
 export const BREADCRUMBS_HOME = "Strona główna";
 export const BREADCRUMBS_USERS = "Użytkownicy";
 export const MENU_ITEM_CALENDAR = "Kalendarz";
@@ -38,6 +38,12 @@ export const EDIT_PROFILE_BTN_TEXT = "Edytuj profil";
 export const CANCEL_BTN_TEXT = "Anuluj";
 export const BACK_BTN_TEXT = "Wróć";
 export const ERROR_PAGE_GENERAL_TITLE = "Wystąpił błąd";
+export const IMAGE_BASE64_PREFIX = "data:image/";
+export const IMAGE_BASE64_JPG_PREFIX = "data:image/jpg;base64,";
+export const IMAGE_DELETION_CONFIRMATION_MSG =
+  "Czy na pewno chcesz usunąć zdjęcie?";
+export const DIALOG_AGREE_BTN_TEXT = "Potwierdź";
+export const DIALOG_CANCEL_BTN_TEXT = "Anuluj";
 export const USER_PROPERTIES = {
   login: "Login",
   firstName: "Imię",
@@ -46,5 +52,6 @@ export const USER_PROPERTIES = {
   phone: "Telefon",
   github: "Github",
   bio: "Bio",
+  image: "Zdjęcie",
   projects: "Projekty",
 };
