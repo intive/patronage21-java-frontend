@@ -17,6 +17,7 @@ import {
   DATA_NOT_CHANGED_MSG,
   DATA_UPDATED_MSG,
   SERVER_ERROR_MSG,
+  IMAGE_UPDATED_MSG
 } from "../config/AlertConstants";
 
 export const checkSearchAlerts = selector({
@@ -75,6 +76,38 @@ export const checkEditionAlerts = selector({
         break;
       case "sameData":
         setAlert(alert, INFO, DATA_NOT_CHANGED_MSG, "");
+        set(alertFrameVisibleState, true);
+        break;
+      default:
+        checkCommonErrors(status, content, alert);
+        set(alertFrameVisibleState, true);
+    }
+    alert.caller = caller;
+    set(alertState, alert);
+  },
+});
+
+export const checkImageEditionAlerts = selector({
+  key: "checkImageEditionAlerts",
+  set: ({ get, set }, caller) => {
+    const status = get(lastResponseState).status;
+    const content = get(lastResponseState).body;
+    const alert = {};
+    switch (status) {
+      case 200:
+        setAlert(alert, SUCCESS, IMAGE_UPDATED_MSG, "");
+        set(alertFrameVisibleState, true);
+        break;
+      case 404:
+        if (content.violationErrors) {
+          setAlert(alert, ERROR, USER_NOT_FOUND_MSG, content);
+        } else {
+          setAlert(alert, ERROR, NO_CONNECTION_MSG, "");
+        }
+        set(alertFrameVisibleState, true);
+        break;
+      case 422:
+        setAlert(alert, ERROR, INCORRECT_DATA_MSG, content);
         set(alertFrameVisibleState, true);
         break;
       default:

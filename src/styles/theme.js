@@ -10,6 +10,7 @@ const colors = {
   red: "#f30e2b",
   grey: "#9f9f9f",
   lightGrey: "#fafafa",
+  lightGrey2: "#cacaca",
   white1: "#ffffff",
   white2: "#ebf8ff",
 };
@@ -21,11 +22,11 @@ const MuiTheme = createMuiTheme({
     },
     primary: {
       main: colors.lightBlue,
-      contrastText: colors.white1
+      contrastText: colors.white1,
     },
     secondary: {
       main: colors.pink,
-      contrastText: colors.white1
+      contrastText: colors.white1,
     },
   },
 });
@@ -35,6 +36,8 @@ const customPalette = {
     secondary: colors.blue,
     bar: colors.lightBlue2,
     listItemHovered: colors.lightGrey,
+    imageButtonIconBg: colors.white2,
+    imageButtonIconBgHover: colors.lightGrey2,
   },
   text: {
     primary: colors.black,

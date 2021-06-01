@@ -5,7 +5,6 @@ const api = new Frisbee({
   baseURI: process.env.REACT_APP_USER_MODULE_URL,
   headers: {
     Accept: "application/json",
-    "Content-Type": "application/json",
   },
   mode: "cors",
 });
@@ -65,6 +64,9 @@ export const updateUser = async (updatedUser) => {
     }, {});
     const response = await api.put("/users", {
       body: params,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (response.err) {
       console.error(response.err);
@@ -99,5 +101,43 @@ export const deactivateUserByLogin = async (login) => {
   } catch (error) {
     console.error(error);
     return {};
+  }
+};
+
+export const uploadImage = async (login, image) => {
+  try {
+    const data = new FormData();
+    data.append("image", image);
+    const response = await api.post(`/users/${login}/image`, {
+      body: data,
+    });
+    return response;
+  } catch (error) {
+    const response = { error };
+    return response;
+  }
+};
+
+export const updateImage = async (login, image) => {
+  try {
+    const data = new FormData();
+    data.append("image", image);
+    const response = await api.patch(`/users/${login}/image`, {
+      body: data,
+    });
+    return response;
+  } catch (error) {
+    const response = { error };
+    return response;
+  }
+};
+
+export const deleteImage = async (login) => {
+  try {
+    const response = await api.delete(`/users/${login}/image`, {});
+    return response;
+  } catch (error) {
+    const response = { error };
+    return response;
   }
 };

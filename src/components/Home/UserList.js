@@ -15,6 +15,7 @@ import {
 } from "../../state/atoms";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core";
+import { IMAGE_BASE64_JPG_PREFIX } from "../../config/Constants";
 
 const UserListItem = styled(ListItem)`
   &:hover {
@@ -61,7 +62,10 @@ function UserList(props) {
       onClick={handleClick(user.login)}
     >
       <ListItemAvatar>
-        <Avatar alt = {user.firstName} src = {"data:image/jpg;base64," + user.image}/>
+        <Avatar
+          alt={user.firstName}
+          src={IMAGE_BASE64_JPG_PREFIX + user.image}
+        />
       </ListItemAvatar>
       <ListItemText className={classes.tableLeft} primary={user.firstName + " " + user.lastName} />
       <ListItemText className={classes.tableRight} primary={`(${user.login})`} />
