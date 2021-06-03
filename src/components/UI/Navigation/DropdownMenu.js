@@ -5,9 +5,11 @@ import {
   BREADCRUMBS_HOME,
   MENU_ITEM_CALENDAR,
   MENU_ITEM_REGISTRATION,
+  BREADCRUMBS_USERS,
   USER_PANEL_MODULE_URL,
   CALENDAR_MODULE_URL,
   REGISTRATION_MODULE_URL,
+  USER_MODULE_URL,
 } from "../../../config/Constants";
 import styled from "styled-components";
 
@@ -50,6 +52,9 @@ export default function DropdownMenu() {
         </NavItem>
         <NavItem href={REGISTRATION_MODULE_URL} component="a">
           {MENU_ITEM_REGISTRATION}
+        </NavItem>
+        <NavItem href={USER_MODULE_URL} component="a">
+          {BREADCRUMBS_USERS}
         </NavItem>
       </Menu>
     </>

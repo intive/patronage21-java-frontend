@@ -12,6 +12,7 @@ export const BREADCRUMBS_USERS = "Użytkownicy";
 export const MENU_ITEM_CALENDAR = "Kalendarz";
 export const MENU_ITEM_REGISTRATION = "Rejestracja";
 export const USER_PANEL_MODULE_URL = "http://patronage21.herokuapp.com/";
+export const USER_MODULE_URL = "http://www.intive-patronage.pl/";
 export const CALENDAR_MODULE_URL = "http://patronage21.herokuapp.com/kalendarz";
 export const REGISTRATION_MODULE_URL =
   "http://patronage21.herokuapp.com/rejestracja";

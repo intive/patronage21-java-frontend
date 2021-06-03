@@ -26,9 +26,6 @@ const MuiTheme = createMuiTheme({
       main: colors.pink,
     },
   },
-  typography: {
-    fontFamily: '"Helvetica", sans-serif',
-  },
 });
 
 const customPalette = {
