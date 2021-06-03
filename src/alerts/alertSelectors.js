@@ -1,11 +1,13 @@
-import { selector } from "recoil";
+import { selector} from "recoil";
 import {
   alertFrameVisibleState,
   lastResponseState,
   alertState,
   userIsEditedState,
 } from "../state/atoms";
-import { setCurrentUserState } from "../state/selectors";
+import {
+  setCurrentUserState,
+} from "../state/selectors";
 import {
   ERROR,
   SUCCESS,
@@ -209,7 +211,6 @@ export const checkUserFetchAlerts = selector({
         checkCommonErrors(status, content, alert, caller);
         set(alertFrameVisibleState, true);
     }
-    set(alertState, alert);
   },
 });
 
