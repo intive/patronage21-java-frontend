@@ -5,9 +5,9 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Helvetica", sans-serif;
-    font-size: 1em;
-    background-color: #fff;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    min-height: 100vh;
   }
 `;
 
