@@ -6,6 +6,7 @@ import {
   viewChangedState,
   usersSearchValueState,
   techGroupSelectValueState,
+  showInactiveUsersState,
 } from "../../state/atoms";
 import { checkSearchAlerts } from "../../alerts/alertSelectors";
 import Grid from "@material-ui/core/Grid";
@@ -35,6 +36,7 @@ function UserListsContainer() {
   const searchedUserData = useRecoilValue(usersSearchValueState);
   const selectedGroup = useRecoilValue(techGroupSelectValueState);
   const [usersLoaded, setUsersLoaded] = useState(true);
+  const showInactiveUsers = useRecoilValue(showInactiveUsersState);
   const setResponse = useSetRecoilState(setLastResponseState);
   const setSearchAlerts = useSetRecoilState(checkSearchAlerts);
   const firstUpdate = useRef(true);
@@ -52,13 +54,19 @@ function UserListsContainer() {
     }
     setUsersLoaded(false);
     async function fetchUsers() {
-      const searchParams = [searchedUserData, selectedGroup];
+      const searchParams = [showInactiveUsers, searchedUserData, selectedGroup];
       setCandidatesResponse(await getUsers(ROLE_CANDIDATE, ...searchParams));
       setLeadersResponse(await getUsers(ROLE_LEADER, ...searchParams));
       setUsersLoaded(true);
     }
     fetchUsers();
-  }, [activeView, viewChanged, searchedUserData, selectedGroup]);
+  }, [
+    activeView,
+    viewChanged,
+    searchedUserData,
+    selectedGroup,
+    showInactiveUsers,
+  ]);
 
   useEffect(() => {
     setResponse(candidatesResponse);

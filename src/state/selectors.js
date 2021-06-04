@@ -10,7 +10,7 @@ import {
 
 export const usersQuery = selectorFamily({
   key: "users",
-  get: (role) => () => getUsers(role),
+  get: (role) => () => getUsers(role, false),
 });
 
 export const techGroupsQuery = selector({
