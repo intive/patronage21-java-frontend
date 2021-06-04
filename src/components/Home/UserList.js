@@ -14,6 +14,7 @@ import {
   viewChangedState,
 } from "../../state/atoms";
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/core";
 
 const UserListItem = styled(ListItem)`
   &:hover {
@@ -23,7 +24,20 @@ const UserListItem = styled(ListItem)`
   }
 `;
 
+const styles = makeStyles((theme) => ({
+  tableLeft: {
+    marginRight: 2,
+  },
+  tableRight: {
+    color: theme.customPalette.text.secondary,
+    textAlign: "right",
+    fontStyle: "italic",
+    marginLeft: 2,
+  },
+}));
+
 function UserList(props) {
+  const classes = styles();
   const setLogin = useSetRecoilState(userProperty("login"));
   const setActiveView = useSetRecoilState(activeViewState);
   const setViewChanged = useSetRecoilState(viewChangedState);
@@ -49,7 +63,8 @@ function UserList(props) {
       <ListItemAvatar>
         <Avatar alt = {user.firstName} src = {"data:image/jpg;base64," + user.image}/>
       </ListItemAvatar>
-      <ListItemText primary={user.firstName + " " + user.lastName} />
+      <ListItemText className={classes.tableLeft} primary={user.firstName + " " + user.lastName} />
+      <ListItemText className={classes.tableRight} primary={`(${user.login})`} />
     </UserListItem>
   );
 

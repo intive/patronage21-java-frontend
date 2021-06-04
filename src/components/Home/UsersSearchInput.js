@@ -7,6 +7,7 @@ import {
   HOME_SEARCH_INPUT_PLACEHOLDER,
   HOME_SEARCH_INPUT_ARIA_LABEL,
   HOME_SEARCH_THROTTLE_TIME,
+  SEARCH_TOOLTIP_MESSAGE,
 } from "../../config/Constants";
 
 function UsersSearchInput() {
@@ -36,6 +37,7 @@ function UsersSearchInput() {
       ariaLabel={HOME_SEARCH_INPUT_ARIA_LABEL}
       value={value}
       handleChange={handleChange}
+      tooltipMessage={SEARCH_TOOLTIP_MESSAGE}
     />
   );
 }
