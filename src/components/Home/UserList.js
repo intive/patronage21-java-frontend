@@ -12,12 +12,21 @@ import {
   usersSearchValueState,
   techGroupSelectValueState,
   viewChangedState,
+  showInactiveUsersState,
 } from "../../state/atoms";
+import { USER_INACTIVE_STATUS } from "../../config/Constants";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core";
 import { IMAGE_BASE64_JPG_PREFIX } from "../../config/Constants";
 
 const UserListItem = styled(ListItem)`
+  ${({ status }) =>
+    status === USER_INACTIVE_STATUS &&
+    `
+    & > * {
+      opacity: 0.4;
+    }
+  `}
   &:hover {
     cursor: pointer;
     background-color: ${({ theme }) =>
@@ -43,6 +52,7 @@ function UserList(props) {
   const setActiveView = useSetRecoilState(activeViewState);
   const setViewChanged = useSetRecoilState(viewChangedState);
   const resetUsersSearchValue = useResetRecoilState(usersSearchValueState);
+  const resetShowAllUsers = useResetRecoilState(showInactiveUsersState);
   const resetTechGroupSelectValue = useResetRecoilState(
     techGroupSelectValueState
   );
@@ -53,10 +63,12 @@ function UserList(props) {
     setViewChanged(true);
     resetUsersSearchValue();
     resetTechGroupSelectValue();
+    resetShowAllUsers();
   };
 
   const createListItem = (user, index, users) => (
     <UserListItem
+      status={user.status}
       key={user.login}
       divider={index !== users.length - 1}
       onClick={handleClick(user.login)}

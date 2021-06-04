@@ -31,6 +31,11 @@ export const techGroupSelectValueState = atom({
   default: HOME_DROPDOWN_DEFAULT_VALUE,
 });
 
+export const showInactiveUsersState = atom({
+  key: "showInactiveUsers",
+  default: false,
+});
+
 export const currentUserState = atom({
   key: "currentUser",
   default: {},
