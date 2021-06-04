@@ -41,6 +41,7 @@ function EditableContact() {
       setter: setEmail,
       type: "email",
       buttonText: USER_CONTACT_BUTTON_MAIL,
+      action: `mailto:${email}`,
     },
     {
       key: "phone",
@@ -48,6 +49,7 @@ function EditableContact() {
       setter: setPhone,
       type: "number",
       buttonText: USER_CONTACT_BUTTON_PHONE,
+      action: `callto://${phone}`,
     },
     {
       key: "github",
@@ -55,6 +57,7 @@ function EditableContact() {
       setter: setGithub,
       type: "url",
       buttonText: USER_CONTACT_BUTTON_GITHUB,
+      action: github,
     },
   ];
 
@@ -71,13 +74,16 @@ function EditableContact() {
       <ListItemText primary={property.value} />
       <Grid container>
         <Grid item xs={12} md={7} lg={5}>
-          <Button
-            className={classes.button}
-            variant={"contained"}
-            color={"secondary"}
-          >
-            {property.buttonText}
-          </Button>
+            <Button
+              className={classes.button}
+              variant={"contained"}
+              color={"secondary"}
+              target={property.key === "github" ? "_blank" : null}
+              href={property.action}
+              disabled={property.value === null}
+            >
+              {property.buttonText}
+            </Button>
         </Grid>
       </Grid>
     </ListItem>
