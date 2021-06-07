@@ -12,4 +12,5 @@ RUN npm install \
 
 FROM nginx
 COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/src/errors /usr/share/nginx/html/errors
 EXPOSE 80

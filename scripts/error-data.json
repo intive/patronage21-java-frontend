@@ -32,10 +32,6 @@
     "body": "Wysłano zbyt wiele żądań"
   },
   {
-    "status": 499,
-    "body": "Zamknięcie żądania w trakcie przetwarzania go przez serwer"
-  },
-  {
     "status": 500,
     "body": "Wewnętrzny błąd serwera"
   },
