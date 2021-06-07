@@ -102,6 +102,13 @@ function createDirectory(directory) {
   }
 }
 
+function copyFile(sourceFile, targetFile) {
+  fs.copyFile(sourceFile, targetFile, (err) => {
+    if (err) throw err;
+    console.log(`${sourceFile} was copied to ${targetFile}`);
+  });
+}
+
 function getHtmlAndStyles() {
   let html, muiCss, scStyle;
   const styledSheet = new ServerStyleSheet();
@@ -130,6 +137,10 @@ function createStaticErrorPage(htmlAndStyles, error) {
 }
 
 createDirectory("./src/errors");
+copyFile(
+  "./src/components/UI/Error/patronage-cat-error.svg",
+  "./src/errors/patronage-cat-error.svg"
+);
 readJSONFile("./scripts/error-data.json").then((errors) => {
   const htmlAndStyles = getHtmlAndStyles();
   errors.forEach((error) => createStaticErrorPage(htmlAndStyles, error));

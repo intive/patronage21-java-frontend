@@ -5,7 +5,6 @@ import {
   ErrorTitle,
   StyledImage,
 } from "./style";
-import Patrocat from "../Patrocat";
 import {
   USER_PANEL_MODULE_URL,
   BREADCRUMBS_HOME,
@@ -35,7 +34,12 @@ export default function ErrorPage({ title, description, isReturn }) {
         </StyledButton>
       )}
       <StyledImage>
-        <Patrocat isSad />
+        <img
+          src="patronage-cat-error.svg"
+          alt="Patrocat error"
+          width={300}
+          height={300}
+        /> 
       </StyledImage>
     </ErrorScreenWrapper>
   );
