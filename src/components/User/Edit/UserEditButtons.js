@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import {
   userIsEditedState,
@@ -38,12 +39,18 @@ function UserEditButtons() {
   const cancelEdition = useSetRecoilState(cancelUserEdition);
   const currentUser = useRecoilValue(currentUserState);
   const [edited, setEdited] = useRecoilState(userIsEditedState);
-  const userDataUpdated = useRecoilValue(isUserDataChanged);
+  const updated = useRecoilValue(isUserDataChanged);
   const editionTempUser = useRecoilValue(getEditionTempUser);
   const setResponse = useSetRecoilState(setLastResponseState);
   const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
   const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
   const [status, setStatus] = useRecoilState(userProperty("status"));
+
+  useEffect(() => {
+    if (edited && !updated) {
+      setAlertFrameVisibleState(false);
+    }
+  }, [updated, edited, setAlertFrameVisibleState]);
 
   const deactivate = () => {
     deactivateUserByLogin(currentUser.login);
@@ -62,7 +69,7 @@ function UserEditButtons() {
   };
 
   const sendUserIfUpdated = async () => {
-    if (userDataUpdated) {
+    if (updated) {
       const response = await updateUser(editionTempUser);
       setResponse(response);
     } else {
@@ -70,31 +77,32 @@ function UserEditButtons() {
     }
   };
 
-  const itemButton = (color, buttonText, functionOnClick) => (
+  const button = (color, buttonText, functionOnClick, disabled) => (
     <Grid item xs={12} key={buttonText}>
       <Button
         className={classes.button}
         variant={"contained"}
         color={color}
         onClick={functionOnClick}
-        disabled={status === USER_INACTIVE_STATUS}
+        disabled={disabled}
       >
         {buttonText}
       </Button>
     </Grid>
   );
 
+  const inactive = status === USER_INACTIVE_STATUS;
   return (
     <Grid item xs={12}>
       <Grid container spacing={2} direction={"column"}>
         {edited
           ? [
-              itemButton("secondary", APPROVE_BTN_TEXT, confirmUpdate),
-              itemButton("secondary", CANCEL_BTN_TEXT, cancelEdition),
+              button("secondary", APPROVE_BTN_TEXT, confirmUpdate, !updated),
+              button("secondary", CANCEL_BTN_TEXT, cancelEdition, false),
             ]
-          : itemButton("secondary", EDIT_PROFILE_BTN_TEXT, enableEdition)}
+          : button("secondary", EDIT_PROFILE_BTN_TEXT, enableEdition, inactive)}
         {status !== USER_INACTIVE_STATUS &&
-          itemButton("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate)}
+          button("primary", DEACTIVATE_PROFILE_BTN_TEXT, deactivate, false)}
       </Grid>
     </Grid>
   );
