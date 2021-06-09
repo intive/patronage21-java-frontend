@@ -6,9 +6,9 @@ import Link from "@material-ui/core/Link";
 import Content from "../Layout/Content";
 import {
   activeViewState,
-  userProperty,
   userLoadedState,
   alertFrameVisibleState,
+  currentUserState,
 } from "../../../state/atoms";
 import { cancelUserEdition } from "../../../state/selectors";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -29,9 +29,8 @@ function UserBreadcrumbs() {
   const [userLoaded, setUserLoaded] = useRecoilState(userLoadedState);
   const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
   const cancelEdition = useSetRecoilState(cancelUserEdition);
-  const firstName = useRecoilValue(userProperty("firstName"));
-  const lastName = useRecoilValue(userProperty("lastName"));
-  const user = firstName + " " + lastName;
+  const currentUser = useRecoilValue(currentUserState);
+  const user = `${currentUser.firstName} ${currentUser.lastName}`;
 
   const breadCrumbItems = {
     users: {

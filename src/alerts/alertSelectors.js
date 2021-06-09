@@ -6,6 +6,9 @@ import {
   userIsEditedState,
 } from "../state/atoms";
 import {
+  setCurrentUserState,
+} from "../state/selectors";
+import {
   ERROR,
   SUCCESS,
   INFO,
@@ -58,6 +61,7 @@ export const checkEditionAlerts = selector({
     const alert = {};
     switch (status) {
       case 200:
+        set(setCurrentUserState);
         set(userIsEditedState, false);
         setAlert(alert, SUCCESS, DATA_UPDATED_MSG, "");
         set(alertFrameVisibleState, true);
