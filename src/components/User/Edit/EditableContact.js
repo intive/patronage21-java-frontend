@@ -12,13 +12,27 @@ import {
   USER_CONTACT_BUTTON_PHONE,
 } from "../../../config/Constants";
 import GroupList from "../../UI/GroupList";
+import styled from "styled-components";
+
+const ListItemView = styled(ListItem)`
+  padding: 16;
+  flex-direction: column;
+  align-items: flex-start;
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+`;
 
 const styles = makeStyles({
-  listItemView: {
-    padding: 16,
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
   button: {
     maxWidth: 200,
     width: "100%",
@@ -66,37 +80,36 @@ function EditableContact() {
   };
 
   const contactItems = contactProperties.map((property, index) => (
-    <ListItem
+    <ListItemView
       divider={index !== contactProperties.length - 1}
-      className={classes.listItemView}
       key={property.key}
     >
       <ListItemText primary={property.value} />
       <Grid container>
         <Grid item xs={12} md={7} lg={5}>
-            <Button
-              className={classes.button}
-              variant={"contained"}
-              color={"secondary"}
-              target={property.key === "github" ? "_blank" : null}
-              href={property.action}
-              disabled={property.value === null}
-            >
-              {property.buttonText}
-            </Button>
+          <Button
+            className={classes.button}
+            variant={"contained"}
+            color={"secondary"}
+            target={property.key === "github" ? "_blank" : null}
+            href={property.action}
+            disabled={property.value === null}
+          >
+            {property.buttonText}
+          </Button>
         </Grid>
       </Grid>
-    </ListItem>
+    </ListItemView>
   ));
 
   const editableContactItems = contactProperties.map((property) => (
-    <ListItem className={classes.listItemView} key={property.key}>
+    <ListItemView key={property.key}>
       <TextField
         value={property.value}
         onChange={setContactProperty(property.setter)}
         type={property.type}
       />
-    </ListItem>
+    </ListItemView>
   ));
 
   return (

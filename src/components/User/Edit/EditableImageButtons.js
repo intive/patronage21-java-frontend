@@ -108,6 +108,7 @@ function EditableImageButtons() {
 
   const handleFileInputChange = (event) => {
     validateAndReadImage(event.target.files[0]);
+    event.target.value = '';
   };
 
   const cofirmDeletion = () => image !== null && setDialogOpen(true);

@@ -34,6 +34,31 @@ export const setCurrentUserState = selector({
   },
 });
 
+export const getEditionTempUser = selector({
+  key: "getEditionTempUser",
+  get: ({ get }) => {
+    const editedUser = {};
+    Object.keys(get(currentUserState)).forEach(
+      (key) => (editedUser[key] = get(userProperty(key)))
+    );
+    return editedUser;
+  },
+});
+
+export const isUserDataChanged = selector({
+  key: "isUserDataChanged",
+  get: ({ get }) => {
+    let userDataUpdated = false;
+    if (get(currentUserState)) {
+      userDataUpdated = Object.keys(get(currentUserState)).some((key) => {
+        if (key === "image") return false;
+        return get(currentUserState)[key] !== get(userProperty(key));
+      });
+    }
+    return userDataUpdated;
+  },
+});
+
 export const cancelUserEdition = selector({
   key: "cancelUserEdition",
   set: ({ get, set }) => {
