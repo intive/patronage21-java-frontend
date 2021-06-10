@@ -10,6 +10,7 @@ import UserEditButtons from "../User/Edit/UserEditButtons";
 import { USER_BIO_TITLE } from "../../config/Constants";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { setUserProperties } from "../../state/selectors";
+import CircleProgressBar from "../UI/CircleProgressBar";
 import {
   currentUserState,
   userLoadedState,
@@ -32,21 +33,23 @@ function User() {
     fetchUser();
   }, [login, setCurrentUser, setUserLoaded, setUserDetails]);
 
-  return (
-    userLoaded && (
-      <>
-        <EditableUserHeader />
-        <GroupTitle>{USER_BIO_TITLE}</GroupTitle>
-        <EditableInformation />
-        <Box my={5}>
-          <Grid container spacing={3}>
-            <EditableProjectsList />
-            <EditableContact />
-            <UserEditButtons />
-          </Grid>
-        </Box>
-      </>
-    )
+  return userLoaded ? (
+    <>
+      <EditableUserHeader />
+      <GroupTitle>{USER_BIO_TITLE}</GroupTitle>
+      <EditableInformation />
+      <Box my={5}>
+        <Grid container spacing={3}>
+          <EditableProjectsList />
+          <EditableContact />
+          <UserEditButtons />
+        </Grid>
+      </Box>
+    </>
+  ) : (
+    <Box my={25}>
+      <CircleProgressBar size={200} />
+    </Box>
   );
 }
 

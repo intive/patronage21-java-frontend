@@ -1,7 +1,8 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
+import PropTypes from "prop-types";
 
-function CircleProgressBar() {
+function CircleProgressBar(props) {
   return (
     <Box
       display="flex"
@@ -10,9 +11,17 @@ function CircleProgressBar() {
       alignItems="center"
       justifyContent="center"
     >
-      <CircularProgress size={20} />
+      <CircularProgress size={props.size} />
     </Box>
   );
 }
+
+CircleProgressBar.propTypes = {
+  size: PropTypes.number,
+};
+
+CircleProgressBar.defaultProps = {
+  size: 20,
+};
 
 export default CircleProgressBar;
