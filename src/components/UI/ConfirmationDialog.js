@@ -11,6 +11,7 @@ import {
 
 export const StyledButton = styled(Button)`
   width: 130px;
+  margin: auto;
 `;
 
 export const StyledDialogActions = styled(DialogActions)`
@@ -29,7 +30,7 @@ function ConfirmationDialog(props) {
           color="primary"
           variant="contained"
         >
-          {DIALOG_CANCEL_BTN_TEXT.toUpperCase()}
+          {DIALOG_CANCEL_BTN_TEXT}
         </StyledButton>
         <StyledButton
           onClick={setConfirmed(true)}
@@ -37,7 +38,7 @@ function ConfirmationDialog(props) {
           autoFocus
           variant="contained"
         >
-          {DIALOG_AGREE_BTN_TEXT.toUpperCase()}
+          {DIALOG_AGREE_BTN_TEXT}
         </StyledButton>
       </StyledDialogActions>
     </Dialog>

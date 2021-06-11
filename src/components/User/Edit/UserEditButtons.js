@@ -13,7 +13,7 @@ import {
   getEditionTempUser,
 } from "../../../state/selectors";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import Button from "../../UI/Navigation/Button";
 import Grid from "@material-ui/core/Grid";
 import {
   APPROVE_BTN_TEXT,
@@ -27,10 +27,8 @@ import { checkEditionAlerts } from "../../../alerts/alertSelectors";
 
 const useStyles = makeStyles(() => ({
   button: {
-    color: "white",
     maxWidth: 320,
     width: "100%",
-    borderRadius: 25,
   },
 }));
 
