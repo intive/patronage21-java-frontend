@@ -77,7 +77,7 @@ export const setLastResponseState = selector({
     if (response.status) {
       status = response.status;
       body = response.body;
-    } else if (response.error.message) {
+    } else if (response.error && response.error.message) {
       status = "error";
       body = response.error.message;
     }
