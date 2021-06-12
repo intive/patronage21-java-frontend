@@ -25,7 +25,9 @@ function UsersContainer() {
           </Grid>
         </Grid>
       </Box>
-      <Suspense fallback={<CircleProgressBar />}>
+      <Suspense
+        fallback={<CircleProgressBar size={30} containerHeight={200} />}
+      >
         <UserListsContainer />
       </Suspense>
     </>

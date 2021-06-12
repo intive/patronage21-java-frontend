@@ -7,7 +7,7 @@ function CircleProgressBar(props) {
     <Box
       display="flex"
       width="100%"
-      height="100%"
+      height={props.containerHeight}
       alignItems="center"
       justifyContent="center"
     >
@@ -18,10 +18,12 @@ function CircleProgressBar(props) {
 
 CircleProgressBar.propTypes = {
   size: PropTypes.number,
+  containerHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 CircleProgressBar.defaultProps = {
   size: 20,
+  containerHeight: "100%",
 };
 
 export default CircleProgressBar;
