@@ -11,11 +11,10 @@ export const BREADCRUMBS_HOME = "Strona główna";
 export const BREADCRUMBS_USERS = "Użytkownicy";
 export const MENU_ITEM_CALENDAR = "Kalendarz";
 export const MENU_ITEM_REGISTRATION = "Rejestracja";
-export const USER_PANEL_MODULE_URL = "http://patronage21.herokuapp.com/";
+export const USER_PANEL_MODULE_URL = "https://patronage21.herokuapp.com/";
 export const USER_MODULE_URL = "http://www.intive-patronage.pl/";
-export const CALENDAR_MODULE_URL = "http://patronage21.herokuapp.com/kalendarz";
-export const REGISTRATION_MODULE_URL =
-  "http://patronage21.herokuapp.com/rejestracja";
+export const CALENDAR_MODULE_URL = "https://patronage21.herokuapp.com/kalendarz";
+export const REGISTRATION_MODULE_URL = "https://patronage21.herokuapp.com/rejestracja";
 export const APPBAR_SEARCH_INPUT_PLACEHOLDER = "Szukaj...";
 export const HOME_TITLE = "Użytkownicy";
 export const HOME_INFO = "Poniżej wylistowani zostali użytkownicy Patronage";
