@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ListItem, ListItemText, TextField } from "@material-ui/core";
 import { userIsEditedState, userProperty } from "../../../state/atoms";
-import { Button } from "@material-ui/core";
+import Button from "../../UI/Navigation/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -33,11 +33,18 @@ const ListItemView = styled(ListItem)`
 `;
 
 const styles = makeStyles({
-  button: {
-    maxWidth: 200,
+  listItemView: {
+    padding: 16,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    wordBreak: "break-all",
+  },
+  editListItemView: {
     width: "100%",
-    marginBottom: 10,
-    borderRadius: 25,
+  },
+  button: {
+    minWidth: 150,
+    marginBottom: 3,
   },
 });
 
@@ -84,7 +91,7 @@ function EditableContact() {
       divider={index !== contactProperties.length - 1}
       key={property.key}
     >
-      <ListItemText primary={property.value} />
+      <ListItemText primary={property.value} className={classes.listItemView} />
       <Grid container>
         <Grid item xs={12} md={7} lg={5}>
           <Button
@@ -108,6 +115,8 @@ function EditableContact() {
         value={property.value}
         onChange={setContactProperty(property.setter)}
         type={property.type}
+        className={classes.editListItemView}
+        multiline
       />
     </ListItemView>
   ));
