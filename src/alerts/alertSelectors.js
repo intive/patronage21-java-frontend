@@ -5,9 +5,7 @@ import {
   alertState,
   userIsEditedState,
 } from "../state/atoms";
-import {
-  setCurrentUserState,
-} from "../state/selectors";
+import { setCurrentUserState } from "../state/selectors";
 import {
   ERROR,
   SUCCESS,
@@ -20,7 +18,8 @@ import {
   DATA_NOT_CHANGED_MSG,
   DATA_UPDATED_MSG,
   SERVER_ERROR_MSG,
-  IMAGE_UPDATED_MSG
+  IMAGE_UPDATED_MSG,
+  USER_DEACTIVATED_MSG,
 } from "../config/AlertConstants";
 
 export const checkSearchAlerts = selector({
@@ -45,7 +44,7 @@ export const checkSearchAlerts = selector({
         set(alertState, alert);
         break;
       default:
-        checkCommonErrors(status, content, alert);
+        checkCommonErrors(status, content, alert, caller);
         alert.caller = caller;
         set(alertFrameVisibleState, true);
         set(alertState, alert);
@@ -83,7 +82,7 @@ export const checkEditionAlerts = selector({
         set(alertFrameVisibleState, true);
         break;
       default:
-        checkCommonErrors(status, content, alert);
+        checkCommonErrors(status, content, alert, caller);
         set(alertFrameVisibleState, true);
     }
     alert.caller = caller;
@@ -115,7 +114,7 @@ export const checkImageEditionAlerts = selector({
         set(alertFrameVisibleState, true);
         break;
       default:
-        checkCommonErrors(status, content, alert);
+        checkCommonErrors(status, content, alert, caller);
         set(alertFrameVisibleState, true);
     }
     alert.caller = caller;
@@ -123,9 +122,101 @@ export const checkImageEditionAlerts = selector({
   },
 });
 
-const checkCommonErrors = (status, content, alert) => {
+export const checkGroupsFetchAlerts = selector({
+  key: "checkGroupsFetchAlerts",
+  set: ({ get, set }, caller) => {
+    const status = get(lastResponseState).status;
+    const content = get(lastResponseState).body;
+    const lastAlertCaller = get(alertState).caller;
+    const alert = {};
+
+    switch (status) {
+      case 200:
+        if (lastAlertCaller === caller) {
+          set(alertFrameVisibleState, false);
+        }
+        break;
+      case 404:
+        setAlert(alert, ERROR, NO_CONNECTION_MSG, "");
+        alert.caller = caller;
+        set(alertFrameVisibleState, true);
+        set(alertState, alert);
+        break;
+      default:
+        checkCommonErrors(status, content, alert, caller);
+        set(alertFrameVisibleState, true);
+    }
+    set(alertState, alert);
+  },
+});
+
+export const checkDeactivationAlerts = selector({
+  key: "checkDeactivationAlerts",
+  set: ({ get, set }, caller) => {
+    const status = get(lastResponseState).status;
+    const content = get(lastResponseState).body;
+    const alert = {};
+    switch (status) {
+      case 200:
+        setAlert(alert, SUCCESS, USER_DEACTIVATED_MSG, "");
+        set(alertFrameVisibleState, true);
+        break;
+      case 404:
+        if (content.violationErrors) {
+          setAlert(alert, ERROR, USER_NOT_FOUND_MSG, content);
+        } else {
+          setAlert(alert, ERROR, NO_CONNECTION_MSG, "");
+        }
+        set(alertFrameVisibleState, true);
+        break;
+      case 422:
+        setAlert(alert, ERROR, INCORRECT_DATA_MSG, content);
+        set(alertFrameVisibleState, true);
+        break;
+      default:
+        checkCommonErrors(status, content, alert, caller);
+        set(alertFrameVisibleState, true);
+    }
+    alert.caller = caller;
+    set(alertState, alert);
+  },
+});
+
+export const checkUserFetchAlerts = selector({
+  key: "checkUserFetchAlerts",
+  set: ({ get, set }, caller) => {
+    const status = get(lastResponseState).status;
+    const content = get(lastResponseState).body;
+    const lastAlertCaller = get(alertState).caller;
+    const alert = {};
+
+    switch (status) {
+      case 200:
+        if (lastAlertCaller === caller) {
+          set(alertFrameVisibleState, false);
+        }
+        break;
+      case 404:
+        if (content.violationErrors) {
+          setAlert(alert, ERROR, USER_NOT_FOUND_MSG, content);
+        } else {
+          setAlert(alert, ERROR, NO_CONNECTION_MSG, "");
+        }
+        alert.caller = caller;
+        set(alertFrameVisibleState, true);
+        break;
+      default:
+        checkCommonErrors(status, content, alert, caller);
+        set(alertFrameVisibleState, true);
+    }
+    set(alertState, alert);
+  },
+});
+
+const checkCommonErrors = (status, content, alert, caller) => {
   switch (status) {
     case "error":
+      alert.caller = caller;
       setAlert(alert, ERROR, APP_ERROR_MSG, content);
       break;
     default:
@@ -135,6 +226,7 @@ const checkCommonErrors = (status, content, alert) => {
       } else {
         setAlert(alert, ERROR, GENERAL_ERROR_MSG, "");
       }
+      alert.caller = caller;
   }
 };
 

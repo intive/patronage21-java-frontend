@@ -61,4 +61,8 @@ EditableImage.propTypes = {
   ]),
 };
 
+EditableImage.defaultProps = {
+  firstName: "-",
+};
+
 export default EditableImage;

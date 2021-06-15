@@ -11,6 +11,8 @@ import { USER_BIO_TITLE } from "../../config/Constants";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { setUserProperties } from "../../state/selectors";
 import CircleProgressBar from "../UI/CircleProgressBar";
+import { checkUserFetchAlerts } from "../../alerts/alertSelectors";
+import { setLastResponseState } from "../../state/selectors";
 import {
   currentUserState,
   userLoadedState,
@@ -22,16 +24,30 @@ function User() {
   const setCurrentUser = useSetRecoilState(currentUserState);
   const login = useRecoilValue(userProperty("login"));
   const [userLoaded, setUserLoaded] = useRecoilState(userLoadedState);
+  const setResponse = useSetRecoilState(setLastResponseState);
+  const setUserFetchAlerts = useSetRecoilState(checkUserFetchAlerts);
   const setUserDetails = useSetRecoilState(setUserProperties);
 
   useEffect(() => {
     async function fetchUser() {
-      setCurrentUser(await getUser(login));
-      setUserLoaded(true);
-      setUserDetails();
+      const userResponse = await getUser(login);
+      setResponse(userResponse);
+      setUserFetchAlerts("user");
+      if (userResponse.status === 200) {
+        setCurrentUser(userResponse.body.user);
+        setUserLoaded(true);
+        setUserDetails();
+      }
     }
     fetchUser();
-  }, [login, setCurrentUser, setUserLoaded, setUserDetails]);
+  }, [
+    login,
+    setCurrentUser,
+    setUserLoaded,
+    setUserDetails,
+    setResponse,
+    setUserFetchAlerts,
+  ]);
 
   return userLoaded ? (
     <>

@@ -15,14 +15,13 @@ const api = new Frisbee({
 export const getTechGroups = async () => {
   try {
     const response = await api.get("/groups", {});
-    if (response.err) {
-      console.error(response.err);
-      return [];
+    if (!response.body.groups) {
+      response.body.groups = [];
     }
-    return response.body.groups;
+    return response;
   } catch (error) {
-    console.error(error);
-    return [];
+    const response = { error, body: { groups: [] } };
+    return response;
   }
 };
 
@@ -74,39 +73,35 @@ export const updateUser = async (updatedUser) => {
         "Content-Type": "application/json",
       },
     });
-    if (response.err) {
-      console.error(response.err);
-    }
     return response;
   } catch (error) {
-    console.error(error);
+    const response = { error };
+    return response;
   }
 };
 
 export const getUser = async (login) => {
+  let response;
   try {
-    const response = await api.get(`/users/${login}`);
-    if (response.err) {
-      console.error(response.err);
-      return {};
+    response = await api.get(`/users/${login}`);
+    if (!response.body.user) {
+      response.body.user = {};
     }
-    return response.body.user;
   } catch (error) {
-    console.error(error);
-    return {};
+    response = { error, body: { user: {} } };
+  } finally {
+    return response;
   }
 };
 
 export const deactivateUserByLogin = async (login) => {
+  let response;
   try {
-    const response = await api.patch(`/users/${login}/deactivate`);
-    if (response.err) {
-      console.error(response.err);
-    }
-    return response.body.user;
+    response = await api.patch(`/users/${login}/deactivate`);
   } catch (error) {
-    console.error(error);
-    return {};
+    response = { error };
+  } finally {
+    return response;
   }
 };
 

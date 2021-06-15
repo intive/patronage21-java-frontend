@@ -23,7 +23,10 @@ import {
   USER_INACTIVE_STATUS,
 } from "../../../config/Constants";
 import { deactivateUserByLogin, updateUser } from "../../../client/client";
-import { checkEditionAlerts } from "../../../alerts/alertSelectors";
+import {
+  checkEditionAlerts,
+  checkDeactivationAlerts,
+} from "../../../alerts/alertSelectors";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -42,6 +45,7 @@ function UserEditButtons() {
   const setResponse = useSetRecoilState(setLastResponseState);
   const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
   const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
+  const setDeactivationAlerts = useSetRecoilState(checkDeactivationAlerts);
   const [status, setStatus] = useRecoilState(userProperty("status"));
 
   useEffect(() => {
@@ -50,10 +54,14 @@ function UserEditButtons() {
     }
   }, [updated, edited, setAlertFrameVisibleState]);
 
-  const deactivate = () => {
-    deactivateUserByLogin(currentUser.login);
-    cancelEdition();
-    setStatus(USER_INACTIVE_STATUS);
+  const deactivate = async () => {
+    const deactivationResponse = await deactivateUserByLogin(currentUser.login);
+    if (deactivationResponse.status === 200) {
+      cancelEdition();
+      setStatus(USER_INACTIVE_STATUS);
+    }
+    setResponse(deactivationResponse);
+    setDeactivationAlerts("deactivation");
   };
 
   const confirmUpdate = async () => {
