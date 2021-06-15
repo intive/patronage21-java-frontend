@@ -12,6 +12,7 @@ import {
   techGroupSelectValueState,
   viewChangedState,
   showInactiveUsersState,
+  alertFrameVisibleState,
 } from "../../state/atoms";
 import { USER_INACTIVE_STATUS } from "../../config/Constants";
 import styled from "styled-components";
@@ -52,6 +53,7 @@ function UserListItem(props) {
   const setViewChanged = useSetRecoilState(viewChangedState);
   const resetUsersSearchValue = useResetRecoilState(usersSearchValueState);
   const resetShowAllUsers = useResetRecoilState(showInactiveUsersState);
+  const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
   const resetTechGroupSelectValue = useResetRecoilState(
     techGroupSelectValueState
   );
@@ -63,6 +65,7 @@ function UserListItem(props) {
     resetUsersSearchValue();
     resetTechGroupSelectValue();
     resetShowAllUsers();
+    setAlertFrameVisibleState(false);
   };
 
   const user = { ...props.user };
