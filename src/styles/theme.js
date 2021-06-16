@@ -11,6 +11,7 @@ const colors = {
   grey: "#9f9f9f",
   lightGrey: "#fafafa",
   lightGrey2: "#cacaca",
+  lightGrey3: "#f2f2f2",
   white1: "#ffffff",
   white2: "#ebf8ff",
 };
@@ -35,7 +36,7 @@ const customPalette = {
   colors: {
     secondary: colors.blue,
     bar: colors.lightBlue2,
-    listItemHovered: colors.lightGrey,
+    listItemHovered: colors.lightGrey3,
     imageButtonIconBg: colors.white2,
     imageButtonIconBgHover: colors.lightGrey2,
   },

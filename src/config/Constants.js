@@ -6,7 +6,7 @@ export const USER_PROJECTS_LIMIT = 5;
 export const PROJECTS_LIMIT_MESSAGE =
   "Maksymalny limit projektów, w których można uczestniczyć w tym samym czasie, wynosi: " +
   USER_PROJECTS_LIMIT;
-export const SEARCH_TOOLTIP_MESSAGE = "Szukaj po loginie, imieniu, nazwisku";
+export const SEARCH_TOOLTIP_MESSAGE = "Szukaj po loginie, imieniu i nazwisku";
 export const BREADCRUMBS_HOME = "Strona główna";
 export const BREADCRUMBS_USERS = "Użytkownicy";
 export const MENU_ITEM_CALENDAR = "Kalendarz";

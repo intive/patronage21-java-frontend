@@ -30,7 +30,7 @@ function UserBreadcrumbs() {
   const setAlertFrameVisibleState = useSetRecoilState(alertFrameVisibleState);
   const cancelEdition = useSetRecoilState(cancelUserEdition);
   const currentUser = useRecoilValue(currentUserState);
-  const user = `${currentUser.firstName} ${currentUser.lastName}`;
+  const user = `${currentUser.firstName} ${currentUser.lastName} (${currentUser.login})`;
 
   const breadCrumbItems = {
     users: {
@@ -61,7 +61,7 @@ function UserBreadcrumbs() {
     </NavLink>
   );
 
-  const chagingBreadcrumbs = breadcrumbsInView[activeView].map(
+  const changingBreadcrumbs = breadcrumbsInView[activeView].map(
     (item, index, breadcrumbs) => {
       return index !== breadcrumbs.length - 1 ? (
         createLink(item.text, item.view)
@@ -83,7 +83,7 @@ function UserBreadcrumbs() {
           <Link color="inherit" href={USER_PANEL_MODULE_URL}>
             {BREADCRUMBS_HOME}
           </Link>
-          {chagingBreadcrumbs}
+          {changingBreadcrumbs}
         </Breadcrumbs>
       </Content>
     )
