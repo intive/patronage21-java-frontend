@@ -11,6 +11,7 @@ import DropdownMenu from "./DropdownMenu";
 import AlertFrame from "../../../components/UI/AlertFrame";
 import { useRecoilValue } from "recoil";
 import { alertFrameVisibleState } from "../../../state/atoms";
+import { Hidden } from "@material-ui/core";
 
 const Buttons = styled.div`
   ${({ theme }) => `
@@ -30,9 +31,11 @@ export default function UserHeader() {
   return (
     <>
       <AppHeader useLogoRedirect>
-        <SearchBar>
-          <SearchIcon />
-        </SearchBar>
+        <Hidden xsDown>
+          <SearchBar>
+            <SearchIcon />
+          </SearchBar>
+        </Hidden>
         <Buttons>
           <IconButton>
             <PersonIcon />
