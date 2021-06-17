@@ -17,6 +17,7 @@ const styles = makeStyles({
   },
   bio: {
     wordBreak: "break-word",
+    margin: 15
   },
 });
 
@@ -29,7 +30,7 @@ function EditableInformation() {
 
   const editableBio = () => (
     <TextField
-      value={bio}
+      value={bio ? bio : ""}
       className={classes.textField}
       multiline
       fullWidth
@@ -38,9 +39,9 @@ function EditableInformation() {
   );
 
   const displayBio = () => (
-    <p className={classes.bio}>
+    <div className={classes.bio}>
       <Bio>{bio}</Bio>
-    </p>
+    </div>
   );
 
   return <>{edited ? editableBio() : displayBio()}</>;
