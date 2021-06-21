@@ -32,6 +32,7 @@ const StyledListItem = styled(ListItem)`
     background-color: ${({ theme }) =>
       theme.customPalette.colors.listItemHovered};
   }
+  flex-wrap: wrap;
 `;
 
 const styles = makeStyles((theme) => ({
