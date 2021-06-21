@@ -4,6 +4,7 @@ import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { TextField } from "@material-ui/core";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
+import { USER_BIO_PLACEHOLDER } from "../../../config/Constants";
 
 const Bio = styled.p`
   ${({ theme }) => theme.breakpoints.up("sm")} {
@@ -31,6 +32,8 @@ function EditableInformation() {
   const editableBio = () => (
     <TextField
       value={bio ? bio : ""}
+      variant={"outlined"}
+      placeholder={USER_BIO_PLACEHOLDER}
       className={classes.textField}
       multiline
       fullWidth

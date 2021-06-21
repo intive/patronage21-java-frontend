@@ -10,6 +10,9 @@ import {
   USER_CONTACT_BUTTON_GITHUB,
   USER_CONTACT_BUTTON_MAIL,
   USER_CONTACT_BUTTON_PHONE,
+  USER_CONTACT_EMAIL_KEY,
+  USER_CONTACT_PHONE_KEY,
+  USER_CONTACT_GITHUB_KEY,
 } from "../../../config/Constants";
 import GroupList from "../../UI/GroupList";
 import styled from "styled-components";
@@ -57,7 +60,7 @@ function EditableContact() {
 
   const contactProperties = [
     {
-      key: "email",
+      key: USER_CONTACT_EMAIL_KEY,
       value: email,
       setter: setEmail,
       type: "email",
@@ -65,7 +68,7 @@ function EditableContact() {
       action: `mailto:${email}`,
     },
     {
-      key: "phone",
+      key: USER_CONTACT_PHONE_KEY,
       value: phone,
       setter: setPhone,
       type: "number",
@@ -73,7 +76,7 @@ function EditableContact() {
       action: `callto://${phone}`,
     },
     {
-      key: "github",
+      key: USER_CONTACT_GITHUB_KEY,
       value: github,
       setter: setGithub,
       type: "url",
@@ -87,7 +90,7 @@ function EditableContact() {
   };
 
   const getClickableLink = link => {
-    return link.startsWith("http://") || link.startsWith("https://") 
+    return link.startsWith("http://") || link.startsWith("https://")
     ? link
     : `//${link}`;
   }
@@ -104,8 +107,8 @@ function EditableContact() {
             className={classes.button}
             variant={"contained"}
             color={"secondary"}
-            target={property.key === "github" ? "_blank" : null}
-            href={property.key === "github" ? getClickableLink(property.action) : property.action}
+            target={property.key === USER_CONTACT_GITHUB_KEY ? "_blank" : null}
+            href={property.key === USER_CONTACT_GITHUB_KEY ? getClickableLink(property.action) : property.action}
             disabled={property.value === null}
           >
             {property.buttonText}
@@ -119,6 +122,8 @@ function EditableContact() {
     <ListItemView key={property.key}>
       <TextField
         value={property.value}
+        variant={"outlined"}
+        label={property.key}
         onChange={setContactProperty(property.setter)}
         type={property.type}
         className={classes.editListItemView}
