@@ -86,6 +86,12 @@ function EditableContact() {
     setMethod(event.target.value);
   };
 
+  const getClickableLink = link => {
+    return link.startsWith("http://") || link.startsWith("https://") 
+    ? link
+    : `//${link}`;
+  }
+
   const contactItems = contactProperties.map((property, index) => (
     <ListItemView
       divider={index !== contactProperties.length - 1}
@@ -99,7 +105,7 @@ function EditableContact() {
             variant={"contained"}
             color={"secondary"}
             target={property.key === "github" ? "_blank" : null}
-            href={property.action}
+            href={property.key === "github" ? getClickableLink(property.action) : property.action}
             disabled={property.value === null}
           >
             {property.buttonText}
