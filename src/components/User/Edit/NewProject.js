@@ -1,18 +1,44 @@
-import { ListItem, Popover, TextField, Typography } from "@material-ui/core";
+import { ListItem, Popover, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import theme from "../../../styles/theme";
-import { PROJECTS_LIMIT_MESSAGE } from "../../../config/Constants";
+import {
+  PROJECTS_LIMIT_MESSAGE,
+  PROJECT_LABEL,
+  PROJECT_ROLE_LABEL,
+  USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
+  USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE,
+  USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE,
+  USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE,
+} from "../../../config/Constants";
+import { PROJECT_ROLE_ADD_ACTION_NAME } from "../../../config/AlertConstants";
+import {
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
+import SelectInput from "../../UI/SelectInput";
+import {
+  projectRolesByProjectIdQuery,
+  setProjectAndRoleToValidateState,
+} from "../../../state/selectors";
+import {
+  checkProjectWithRoleAddAlerts,
+  hasNewProjectInputError,
+  showAlert,
+} from "../../../alerts/alertDropdownSelectors";
+import { selectedProjectState } from "../../../state/atoms";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = makeStyles(() => ({
-  project: {
-    fontWeight: 600,
-    height: 25,
+  formControl: {
+    display: "flex",
+    width: 200,
   },
   popover: {
     pointerEvents: "none",
@@ -26,18 +52,77 @@ const styles = makeStyles(() => ({
 
 function NewProject(props) {
   const classes = styles();
+  const prevRolesRef = useRef();
+  const setValuesToValidate = useSetRecoilState(
+    setProjectAndRoleToValidateState
+  );
+  const setProjectEditionAlerts = useSetRecoilState(
+    checkProjectWithRoleAddAlerts
+  );
+
+  const showAlertTrigger = useSetRecoilState(showAlert);
 
   const [anchorElement, setAnchorElement] = useState(null);
-  const [newProjectName, setNewProjectName] = useState("");
-  const [newProjectRole, setNewProjectRole] = useState("");
+  const [newProjectName, setNewProjectName] = useState(
+    USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
+  );
+  const [newProjectRole, setNewProjectRole] = useState(
+    USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE
+  );
+
+  const hasProjectInputError = useRecoilValue(
+    hasNewProjectInputError({ name: newProjectName, role: newProjectRole })
+  );
+
+  function validateAddProject() {
+    setProjectEditionAlerts("addProject");
+  }
+
+  const handleRoleChange = (label) => {
+    setValuesToValidate({
+      title: PROJECT_ROLE_ADD_ACTION_NAME,
+      projectName: newProjectName,
+      projectRole: label,
+    });
+    setNewProjectRole(label);
+    validateAddProject();
+  };
+
+  const handleProjectChange = (label) => {
+    setValuesToValidate({
+      title: PROJECT_ROLE_ADD_ACTION_NAME,
+      projectName: label,
+      projectRole: newProjectRole,
+    });
+    setNewProjectName(label);
+    validateAddProject();
+  };
+
+  useEffect(() => {
+    setValuesToValidate({
+      title: PROJECT_ROLE_ADD_ACTION_NAME,
+      projectName: newProjectName,
+      projectRole: newProjectRole,
+    });
+  }, [newProjectName, newProjectRole, setValuesToValidate]);
 
   function handleAdd() {
+    validateAddProject();
+    if (hasProjectInputError) {
+      showAlertTrigger();
+      return;
+    }
     const newProject = { name: newProjectName, role: newProjectRole };
     const updatedProjects = [...props.projects];
     updatedProjects.push(newProject);
     props.updateProjects(updatedProjects);
-    setNewProjectName("");
-    setNewProjectRole("");
+    setNewProjectName(USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE);
+    setNewProjectRole(USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE);
+    setValuesToValidate({
+      title: PROJECT_ROLE_ADD_ACTION_NAME,
+      projectName: USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
+      projectRole: USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE,
+    });
   }
 
   const handlePopoverOpen = (event) => {
@@ -50,27 +135,70 @@ function NewProject(props) {
 
   const open = Boolean(anchorElement);
 
-  const handleChange = (functionOnChange) => (event) => {
+  const [selectedProject, setSelectedProject] = useState(
+    useRecoilValue(selectedProjectState)
+  );
+
+  const roles = useRecoilValueLoadable(
+    projectRolesByProjectIdQuery(props.findProjectIdByName(selectedProject))
+  );
+
+  const handleChange = (functionOnChange, label) => (event) => {
+    validateAddProject();
+    label === PROJECT_LABEL && setSelectedProject(event.target.value);
     functionOnChange(event.target.value);
   };
 
-  const item = (value, label, functionOnChange) => (
-    <ListItem disableGutters={true}>
-      <TextField
+  const item = (value, label, functionOnChange, options, itemDisabled) => (
+    <FormControl
+      variant="outlined"
+      className={classes.formControl}
+      disabled={itemDisabled}
+    >
+      <SelectInput
+        list={options}
         value={value}
-        label={label}
-        className={classes.project}
-        onChange={handleChange(functionOnChange)}
         disabled={props.inactive}
+        handleChange={handleChange(functionOnChange, label)}
       />
-    </ListItem>
+    </FormControl>
   );
 
   return (
     <ListItem disabled={props.inactive}>
       <List>
-        {item(newProjectName, "projekt", setNewProjectName)}
-        {item(newProjectRole, "rola", setNewProjectRole)}
+        {item(
+          props.projectsNames.length === 0
+            ? USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE
+            : newProjectName,
+          PROJECT_LABEL,
+          handleProjectChange,
+          props.projectsNames.length === 0
+            ? [USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE]
+            : [
+                USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
+                ...props.projectsNames,
+              ],
+          props.projectsNames.length === 0
+        )}
+        {item(
+          props.loadableRoles(prevRolesRef, roles).length === 0 ||
+            newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
+            ? USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE
+            : newProjectRole,
+          PROJECT_ROLE_LABEL,
+          handleRoleChange,
+          props.loadableRoles(prevRolesRef, roles).length === 0 ||
+            newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
+            ? [USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE]
+            : [
+                USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE,
+                ...props.loadableRoles(prevRolesRef, roles),
+              ],
+          newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE ||
+            props.projectsNames.length === 0 ||
+            props.loadableRoles(prevRolesRef, roles).length === 0
+        )}
       </List>
       <ListItemSecondaryAction>
         <IconButton
@@ -110,6 +238,8 @@ NewProject.propTypes = {
   projects: PropTypes.array.isRequired,
   updateProjects: PropTypes.func.isRequired,
   inactive: PropTypes.bool.isRequired,
+  findProjectIdByName: PropTypes.func.isRequired,
+  projectsNames: PropTypes.array.isRequired,
 };
 
 export default NewProject;

@@ -1,5 +1,8 @@
 import { atom, atomFamily, selectorFamily } from "recoil";
-import { HOME_DROPDOWN_DEFAULT_VALUE } from "../config/Constants";
+import {
+  HOME_DROPDOWN_DEFAULT_VALUE,
+  USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
+} from "../config/Constants";
 
 export const activeViewState = atom({
   key: "activeView",
@@ -13,6 +16,16 @@ export const alertFrameVisibleState = atom({
 
 export const lastResponseState = atom({
   key: "lastRespose",
+  default: {},
+});
+
+export const projectEditionState = atom({
+  key: "projectEditionState",
+  default: {},
+});
+
+export const projectNameAndRoleToValidateState = atom({
+  key: "projectNameAndRoleToValidateState",
   default: {},
 });
 
@@ -34,6 +47,11 @@ export const techGroupSelectValueState = atom({
 export const showInactiveUsersState = atom({
   key: "showInactiveUsers",
   default: false,
+});
+
+export const selectedProjectState = atom({
+  key: "selectedProjectValue",
+  default: USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
 });
 
 export const currentUserState = atom({

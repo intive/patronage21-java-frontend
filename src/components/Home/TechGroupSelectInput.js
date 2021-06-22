@@ -5,10 +5,21 @@ import { techGroupsQuery, setLastResponseState } from "../../state/selectors";
 import { checkGroupsFetchAlerts } from "../../alerts/alertSelectors";
 import SelectInput from "../UI/SelectInput";
 import { HOME_DROPDOWN_DEFAULT_VALUE } from "../../config/Constants";
+import FormControl from "@material-ui/core/FormControl";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  formControl: {
+    display: "flex",
+  },
+});
 
 function TechGroupSelectInput() {
   const setResponse = useSetRecoilState(setLastResponseState);
   const setGroupsFetchAlerts = useSetRecoilState(checkGroupsFetchAlerts);
+
+  const classes = useStyles();
+
   const [selectValue, setSelectValue] = useRecoilState(
     techGroupSelectValueState
   );
@@ -33,11 +44,13 @@ function TechGroupSelectInput() {
   }, [techGroupsResponse]);
 
   return (
-    <SelectInput
-      list={allTechGroups}
-      value={selectValue}
-      handleChange={handleChange}
-    />
+    <FormControl variant="outlined" className={classes.formControl}>
+      <SelectInput
+        list={allTechGroups}
+        value={selectValue}
+        handleChange={handleChange}
+      />
+    </FormControl>
   );
 }
 

@@ -38,6 +38,10 @@ export const USER_BIO_PLACEHOLDER = "Opowiedz coś o sobie :)";
 export const USER_PROJECTS_TITLE = "Projekty";
 export const USER_FIRST_NAME_LABEL = "Imię";
 export const USER_LAST_NAME_LABEL = "Nazwisko";
+export const USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE = "Wybierz projekt";
+export const USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE = "Brak projektów";
+export const USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE = "Wybierz rolę";
+export const USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE = "Brak ról";
 export const DEACTIVATE_PROFILE_BTN_TEXT = "Dezaktywuj profil";
 export const APPROVE_BTN_TEXT = "Zatwierdź";
 export const EDIT_PROFILE_BTN_TEXT = "Edytuj profil";
@@ -61,4 +65,14 @@ export const USER_PROPERTIES = {
   bio: "Bio",
   image: "Zdjęcie",
   projects: "Projekty",
+  userProjectName: "Nazwa projektu",
+  userProjectRoleName: "Rola w projekcie"
 };
+export const PROJECT_LABEL = "projekt";
+export const PROJECT_ROLE_LABEL = "rola";
+export const PROJECT_NAME_PROPERTY = "name";
+export const PROJECT_ID_PROPERTY = "id";
+export const PROJECT_ROLE_PROPERTY = "role";
+export const LOADABLE_ROLES_STATE_HAS_VALUE = "hasValue";
+export const LOADABLE_ROLES_STATE_LOADING = "loading";
+export const LOADABLE_ROLES_STATE_HAS_ERROR = "hasError";

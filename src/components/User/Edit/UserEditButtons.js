@@ -23,10 +23,8 @@ import {
   USER_INACTIVE_STATUS,
 } from "../../../config/Constants";
 import { deactivateUserByLogin, updateUser } from "../../../client/client";
-import {
-  checkEditionAlerts,
-  checkDeactivationAlerts,
-} from "../../../alerts/alertSelectors";
+import { checkEditionAlerts, checkDeactivationAlerts } from "../../../alerts/alertSelectors";
+import { checkProjectWithRoleEditAlerts, hasEditedProjectsInputError } from "../../../alerts/alertDropdownSelectors";
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -47,6 +45,8 @@ function UserEditButtons() {
   const setEditionAlerts = useSetRecoilState(checkEditionAlerts);
   const setDeactivationAlerts = useSetRecoilState(checkDeactivationAlerts);
   const [status, setStatus] = useRecoilState(userProperty("status"));
+  const hasProjectsInputsErrors = useRecoilValue(hasEditedProjectsInputError);
+  const setProjectEditAlerts = useSetRecoilState(checkProjectWithRoleEditAlerts);
 
   useEffect(() => {
     if (edited && !updated) {
@@ -65,6 +65,10 @@ function UserEditButtons() {
   };
 
   const confirmUpdate = async () => {
+    setProjectEditAlerts("editProject");
+    if (hasProjectsInputsErrors) {
+      return
+    }
     await sendUserIfUpdated();
     setEditionAlerts("edition");
   };

@@ -25,6 +25,34 @@ export const getTechGroups = async () => {
   }
 };
 
+export const getProjects = async (year) => {
+  try {
+    const response = await api.get(`/projects?year=${year}`);
+    if (response.err) {
+      console.error(response.err);
+      return [];
+    }
+    return response.body.projects;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getProjectRolesByProjectId = async (id) => {
+  try {
+    const response = await api.get(`/projects/${id}/roles`);
+    if (response.err) {
+      console.error(response.err);
+      return [];
+    }
+    return response.body.roles;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 export const getUsers = async (role, showAllUsers, searchedUserData, group) => {
   try {
     let params;

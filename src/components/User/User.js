@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import GroupTitle from "../UI/GroupTitle";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -7,12 +7,12 @@ import EditableProjectsList from "../User/Edit/EditableProjectsList";
 import EditableContact from "../User/Edit/EditableContact";
 import EditableInformation from "../User/Edit/EditableInformation";
 import UserEditButtons from "../User/Edit/UserEditButtons";
-import { USER_BIO_TITLE } from "../../config/Constants";
+import GroupList from "../UI/GroupList";
+import { USER_BIO_TITLE, USER_PROJECTS_TITLE } from "../../config/Constants";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
-import { setUserProperties } from "../../state/selectors";
+import { setUserProperties, setLastResponseState } from "../../state/selectors";
 import CircleProgressBar from "../UI/CircleProgressBar";
 import { checkUserFetchAlerts } from "../../alerts/alertSelectors";
-import { setLastResponseState } from "../../state/selectors";
 import {
   currentUserState,
   userLoadedState,
@@ -49,6 +49,12 @@ function User() {
     setUserFetchAlerts,
   ]);
 
+  const fallback = (
+    <GroupList title={USER_PROJECTS_TITLE}>
+      <CircleProgressBar containerHeight={110} />
+    </GroupList>
+  );
+
   return userLoaded ? (
     <>
       <EditableUserHeader />
@@ -56,7 +62,9 @@ function User() {
       <EditableInformation />
       <Box my={5}>
         <Grid container spacing={3}>
-          <EditableProjectsList />
+          <Suspense fallback={fallback}>
+            <EditableProjectsList />
+          </Suspense>
           <EditableContact />
           <UserEditButtons />
         </Grid>

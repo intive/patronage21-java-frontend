@@ -1,12 +1,24 @@
 import { selector, selectorFamily } from "recoil";
-import { getTechGroups, getUsers, getUser } from "../client/client";
+import {
+  getTechGroups,
+  getUsers,
+  getUser,
+  getProjects,
+  getProjectRolesByProjectId,
+} from "../client/client";
 import {
   currentUserState,
   userProperty,
   lastResponseState,
   alertFrameVisibleState,
   userIsEditedState,
+  projectEditionState,
+  projectNameAndRoleToValidateState,
 } from "./atoms";
+import {
+  USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE,
+  USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE,
+} from "../config/Constants";
 
 export const usersQuery = selectorFamily({
   key: "users",
@@ -16,6 +28,22 @@ export const usersQuery = selectorFamily({
 export const techGroupsQuery = selector({
   key: "techGroups",
   get: () => getTechGroups(),
+});
+
+export const projectsQuery = selectorFamily({
+  key: "projects",
+  get:
+    (year) =>
+    ({ get }) =>
+      getProjects(year),
+});
+
+export const projectRolesByProjectIdQuery = selectorFamily({
+  key: "projectRoles",
+  get:
+    (id) =>
+    ({ get }) =>
+      typeof id !== "undefined" ? getProjectRolesByProjectId(id) : [],
 });
 
 export const userQuery = selector({
@@ -59,6 +87,50 @@ export const isUserDataChanged = selector({
   },
 });
 
+export const isProjectWithRoleAlreadyExists = selectorFamily({
+  key: "isProjectWithRoleAlreadyExists",
+  get:
+    (project) =>
+    ({ get }) => {
+      let projects = get(userProperty("projects"));
+      let result = projects.find(
+        (element) =>
+          element.name === project.name && element.role === project.role
+      );
+      return result !== undefined ? result : false
+    },
+});
+
+export const hasProjectDuplicateEdit = selector({
+  key: "hasProjectDuplicateEdit",
+  get: ({ get }) => {
+    const hasDuplicate = (arr) =>
+      new Set(arr.map(({ name, role }) => `id|${name}|value|${role}`)).size <
+      arr.length;
+    const projects = get(userProperty("projects"));
+    let result = false;
+    if (get(currentUserState)) {
+      result = hasDuplicate(projects);
+    }
+    return result;
+  },
+});
+
+export const hasProjectNotSelectedRoleEdit = selector({
+  key: "hasProjectNotSelectedRoleEdit",
+  get: ({ get }) => {
+    const projects = get(userProperty("projects"));
+    let resultArr = projects.filter((obj) => {
+      return (
+        obj.role === undefined ||
+        obj.role === USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE ||
+        obj.role === USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE
+      );
+    });
+    return resultArr.length > 0;
+  },
+});
+
 export const cancelUserEdition = selector({
   key: "cancelUserEdition",
   set: ({ get, set }) => {
@@ -82,6 +154,20 @@ export const setLastResponseState = selector({
       body = response.error.message;
     }
     set(lastResponseState, { status, body });
+  },
+});
+
+export const setErrorProjectEditionState = selector({
+  key: "setErrorProjectEditionState",
+  set: ({ set }, error) => {
+    set(projectEditionState, { error });
+  },
+});
+
+export const setProjectAndRoleToValidateState = selector({
+  key: "setProjectAndRoleToValidateState",
+  set: ({ set }, values) => {
+    set(projectNameAndRoleToValidateState, { values });
   },
 });
 
