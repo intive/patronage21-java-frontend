@@ -3,7 +3,17 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userIsEditedState, userProperty } from "../../../state/atoms";
 import { TextField } from "@material-ui/core";
 import UserHeader from "../UI/UserHeader";
-import { USER_FIRST_NAME_LABEL, USER_LAST_NAME_LABEL } from "../../../config/Constants";
+import {
+  USER_FIRST_NAME_LABEL,
+  USER_LAST_NAME_LABEL,
+} from "../../../config/Constants";
+import styled from "styled-components";
+
+const StyledField = styled(TextField)`
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    margin: 10px 0;
+  }
+`;
 
 function EditableUserHeader() {
   const edited = useRecoilValue(userIsEditedState);
@@ -15,14 +25,27 @@ function EditableUserHeader() {
     setMethod(shouldBeTrimmed ? event.target.value.trim() : event.target.value);
   };
 
-  const item = (label, property, setMethod, shouldBeTrimmed) => {
-    return <TextField value={property} variant={"outlined"}  label={label} onChange={handleChange(setMethod, shouldBeTrimmed)} />;
-  };
+  const item = (label, property, setMethod, shouldBeTrimmed) => (
+    <StyledField
+      value={property}
+      variant={"outlined"}
+      label={label}
+      onChange={handleChange(setMethod, shouldBeTrimmed)}
+    />
+  );
 
   return (
     <UserHeader
-      firstName={edited ? item(USER_FIRST_NAME_LABEL, firstName, setFirstName, true) : firstName}
-      lastName={edited ? item(USER_LAST_NAME_LABEL, lastName, setLastName, false) : lastName}
+      firstName={
+        edited
+          ? item(USER_FIRST_NAME_LABEL, firstName, setFirstName, true)
+          : firstName
+      }
+      lastName={
+        edited
+          ? item(USER_LAST_NAME_LABEL, lastName, setLastName, false)
+          : lastName
+      }
       image={image}
       alignItems={edited ? "baseline" : "center"}
     />
