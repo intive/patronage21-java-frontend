@@ -30,7 +30,7 @@ function EditionSelect(props) {
         : USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE} 
       onChange={props.handleChange} 
       className={classes.select}
-      disabled={props.list[0] === USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE}
+      disabled={props.list[0] === USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE || props.disabled}
       input={<OutlinedInput classes={{input: classes.input}}/>}
     >
       {items}
@@ -42,6 +42,7 @@ EditionSelect.propTypes = {
   list: PropTypes.array.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 EditionSelect.defaultProps = {
