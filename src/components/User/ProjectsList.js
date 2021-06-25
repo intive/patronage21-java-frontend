@@ -5,6 +5,11 @@ import { ListItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { USER_PROJECTS_TITLE } from "../../config/Constants";
+import styled from "styled-components";
+
+const ProjectListItem = styled(ListItem)`
+  padding-top: 14px;
+`;
 
 const styles = makeStyles((theme) => ({
   project: {
@@ -38,7 +43,7 @@ function generateListItems(list) {
   const classes = styles();
   return list.map((item, index) => {
     return (
-      <ListItem divider={index !== list.length - 1} key={index}>
+      <ProjectListItem divider={index !== list.length - 1} key={index}>
         <Grid container direction={"column"}>
           <Grid item className={classes.project}>
             <strong>{item.name}</strong>
@@ -47,7 +52,7 @@ function generateListItems(list) {
             <small>{item.role}</small>
           </Grid>
         </Grid>
-      </ListItem>
+      </ProjectListItem>
     );
   });
 }

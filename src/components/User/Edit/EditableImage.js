@@ -16,6 +16,9 @@ const ImageContainer = styled(Box)`
   width: 75px;
   height: 75px;
   position: relative;
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    margin: 15px 0;
+  }
 `;
 
 const ProfileImage = styled(Avatar)`

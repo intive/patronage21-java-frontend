@@ -37,7 +37,7 @@ const ListItemView = styled(ListItem)`
 
 const styles = makeStyles({
   listItemView: {
-    padding: 16,
+    padding: "2px 0 10px 0",
     flexDirection: "column",
     alignItems: "flex-start",
     wordBreak: "break-all",
