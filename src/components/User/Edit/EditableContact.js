@@ -42,7 +42,15 @@ const styles = makeStyles({
     alignItems: "flex-start",
     wordBreak: "break-all",
   },
+  firstInput: {
+    paddingTop: 16,
+    paddingBottom: 4,
+  },
   editListItemView: {
+    paddingTop: 4,
+    paddingBottom: 4,
+  },
+  editItemView: {
     width: "100%",
   },
   button: {
@@ -119,14 +127,14 @@ function EditableContact() {
   ));
 
   const editableContactItems = contactProperties.map((property) => (
-    <ListItemView key={property.key}>
+    <ListItemView key={property.key} className={USER_CONTACT_EMAIL_KEY === property.key ? classes.firstInput : classes.editListItemView}>
       <TextField
         value={property.value}
         variant={"outlined"}
         label={property.key}
         onChange={setContactProperty(property.setter)}
         type={property.type}
-        className={classes.editListItemView}
+        className={classes.editItemView}
         multiline
       />
     </ListItemView>

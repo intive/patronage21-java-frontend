@@ -19,9 +19,14 @@ const styles = makeStyles({
     height: 25,
   },
   listItem: {
-    height: 50,
-    marginTop: 5,
+    padding:0,
+    marginTop:8,
+    marginBottom:8,
   },
+  list: {
+    marginTop: 0, 
+    padding: 0,
+  }
 });
 
 function EditableProject(props) {
@@ -122,7 +127,7 @@ function EditableProject(props) {
   );
 
   return (
-    <List>
+    <List className={classes.list} >
       {Object.keys(props.projects[props.index]).map((key) =>
         item(
           props.projects[props.index],

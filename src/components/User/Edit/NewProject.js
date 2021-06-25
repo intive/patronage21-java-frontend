@@ -36,10 +36,6 @@ import { selectedProjectState } from "../../../state/atoms";
 import FormControl from "@material-ui/core/FormControl";
 
 const styles = makeStyles(() => ({
-  formControl: {
-    display: "flex",
-    width: 200,
-  },
   popover: {
     pointerEvents: "none",
   },
@@ -47,6 +43,18 @@ const styles = makeStyles(() => ({
     padding: 10,
     color: theme.customPalette.colors.listItemHovered,
     background: theme.customPalette.text.secondary,
+  },
+  list: {
+    padding:0,
+  },
+  topSelect: {
+    marginBottom:16,
+    display: "flex",
+    width: 200,
+  },
+  bottomSelect: {
+    display: "flex",
+    width: 200,
   },
 }));
 
@@ -149,10 +157,10 @@ function NewProject(props) {
     functionOnChange(event.target.value);
   };
 
-  const item = (value, label, functionOnChange, options, itemDisabled) => (
+  const item = (value, label, functionOnChange, options, itemDisabled, style) => (
     <FormControl
       variant="outlined"
-      className={classes.formControl}
+      className={style}
       disabled={itemDisabled}
     >
       <SelectInput
@@ -160,13 +168,14 @@ function NewProject(props) {
         value={value}
         disabled={props.inactive}
         handleChange={handleChange(functionOnChange, label)}
+        applyInput={true}
       />
     </FormControl>
   );
 
   return (
     <ListItem disabled={props.inactive}>
-      <List>
+      <List className={classes.list}>
         {item(
           props.projectsNames.length === 0
             ? USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE
@@ -179,7 +188,8 @@ function NewProject(props) {
                 USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
                 ...props.projectsNames,
               ],
-          props.projectsNames.length === 0
+          props.projectsNames.length === 0,
+          classes.topSelect
         )}
         {item(
           props.loadableRoles(prevRolesRef, roles).length === 0 ||
@@ -197,7 +207,8 @@ function NewProject(props) {
               ],
           newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE ||
             props.projectsNames.length === 0 ||
-            props.loadableRoles(prevRolesRef, roles).length === 0
+            props.loadableRoles(prevRolesRef, roles).length === 0,
+          classes.bottomSelect
         )}
       </List>
       <ListItemSecondaryAction>

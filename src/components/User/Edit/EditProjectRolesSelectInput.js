@@ -23,6 +23,7 @@ function EditProjectRolesSelectInput(props) {
         list={props.options}
         value={props.value}
         handleChange={handleChange}
+        applyInput={true}
       />
     </FormControl>
   );
