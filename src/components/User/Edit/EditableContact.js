@@ -94,7 +94,7 @@ function EditableContact() {
   ];
 
   const setContactProperty = (setMethod) => (event) => {
-    setMethod(event.target.value);
+    setMethod(event.target.value.trim());
   };
 
   const getClickableLink = link => {

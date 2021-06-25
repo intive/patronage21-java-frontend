@@ -11,18 +11,18 @@ function EditableUserHeader() {
   const [lastName, setLastName] = useRecoilState(userProperty("lastName"));
   const image = useRecoilValue(userProperty("image"));
 
-  const handleChange = (setMethod) => (event) => {
-    setMethod(event.target.value);
+  const handleChange = (setMethod, shouldBeTrimmed) => (event) => {
+    setMethod(shouldBeTrimmed ? event.target.value.trim() : event.target.value);
   };
 
-  const item = (label, property, setMethod) => {
-    return <TextField value={property} variant={"outlined"}  label={label} onChange={handleChange(setMethod)} />;
+  const item = (label, property, setMethod, shouldBeTrimmed) => {
+    return <TextField value={property} variant={"outlined"}  label={label} onChange={handleChange(setMethod, shouldBeTrimmed)} />;
   };
 
   return (
     <UserHeader
-      firstName={edited ? item(USER_FIRST_NAME_LABEL, firstName, setFirstName) : firstName}
-      lastName={edited ? item(USER_LAST_NAME_LABEL, lastName, setLastName) : lastName}
+      firstName={edited ? item(USER_FIRST_NAME_LABEL, firstName, setFirstName, true) : firstName}
+      lastName={edited ? item(USER_LAST_NAME_LABEL, lastName, setLastName, false) : lastName}
       image={image}
       alignItems={edited ? "baseline" : "center"}
     />

@@ -22,7 +22,7 @@ import {
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
-import SelectInput from "../../UI/SelectInput";
+import EditionSelect from "./EditionSelect";
 import {
   projectRolesByProjectIdQuery,
   setProjectAndRoleToValidateState,
@@ -48,7 +48,7 @@ const styles = makeStyles(() => ({
     padding:0,
   },
   topSelect: {
-    marginBottom:16,
+    marginBottom: 8,
     display: "flex",
     width: 200,
   },
@@ -163,7 +163,7 @@ function NewProject(props) {
       className={style}
       disabled={itemDisabled}
     >
-      <SelectInput
+      <EditionSelect
         list={options}
         value={value}
         disabled={props.inactive}
