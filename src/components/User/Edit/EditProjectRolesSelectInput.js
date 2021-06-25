@@ -1,5 +1,5 @@
 import React from "react";
-import SelectInput from "../../UI/SelectInput";
+import EditionSelect from "./EditionSelect";
 import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,11 +19,10 @@ function EditProjectRolesSelectInput(props) {
 
   return (
     <FormControl variant="outlined" className={classes.formControl} disabled={props.disabled}>
-      <SelectInput
+      <EditionSelect
         list={props.options}
         value={props.value}
         handleChange={handleChange}
-        applyInput={true}
       />
     </FormControl>
   );
@@ -31,7 +30,7 @@ function EditProjectRolesSelectInput(props) {
 
 EditProjectRolesSelectInput.propTypes = {
   index: PropTypes.number.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   propertyName: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
