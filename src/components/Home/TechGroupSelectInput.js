@@ -49,7 +49,6 @@ function TechGroupSelectInput() {
         list={allTechGroups}
         value={selectValue}
         handleChange={handleChange}
-        applyInput={false}
       />
     </FormControl>
   );

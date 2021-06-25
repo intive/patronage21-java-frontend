@@ -168,7 +168,6 @@ function NewProject(props) {
         value={value}
         disabled={props.inactive}
         handleChange={handleChange(functionOnChange, label)}
-        applyInput={true}
       />
     </FormControl>
   );
