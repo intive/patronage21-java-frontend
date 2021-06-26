@@ -172,6 +172,27 @@ function NewProject(props) {
     </FormControl>
   );
 
+  const getRoleOptions = (newProjectName, newProjectRole, loadableRoles) => {
+    if (
+      loadableRoles.length === 0 ||
+      newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
+    ) {
+      return [USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE];
+    }
+    return newProjectRole === USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE
+      ? [USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE, ...loadableRoles]
+      : [...loadableRoles];
+  };
+
+  const getProjectOptions = (newProjectName, projectsNames) => {
+    if (projectsNames.length === 0) {
+      return [USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE];
+    }
+    return newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
+      ? [USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE, ...projectsNames]
+      : [...projectsNames];
+  };
+
   return (
     <ListItem disabled={props.inactive}>
       <List className={classes.list}>
@@ -181,12 +202,7 @@ function NewProject(props) {
             : newProjectName,
           PROJECT_LABEL,
           handleProjectChange,
-          props.projectsNames.length === 0
-            ? [USER_PROJECT_DROPDOWN_UNAVAILABLE_VALUE]
-            : [
-                USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE,
-                ...props.projectsNames,
-              ],
+          getProjectOptions(newProjectName, props.projectsNames),
           props.projectsNames.length === 0,
           classes.topSelect
         )}
@@ -197,13 +213,11 @@ function NewProject(props) {
             : newProjectRole,
           PROJECT_ROLE_LABEL,
           handleRoleChange,
-          props.loadableRoles(prevRolesRef, roles).length === 0 ||
-            newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE
-            ? [USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE]
-            : [
-                USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE,
-                ...props.loadableRoles(prevRolesRef, roles),
-              ],
+          getRoleOptions(
+            newProjectName,
+            newProjectRole,
+            props.loadableRoles(prevRolesRef, roles)
+          ),
           newProjectName === USER_PROJECT_DROPDOWN_NOT_SELECTED_VALUE ||
             props.projectsNames.length === 0 ||
             props.loadableRoles(prevRolesRef, roles).length === 0,

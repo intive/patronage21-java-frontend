@@ -94,13 +94,17 @@ function EditableProject(props) {
     changeValue(index, propertyName, value);
   };
 
-  const getOptions = (propertyName, projectsNames, projectRoles) => {
+  const getOptions = (propertyName, projectsNames, projectRoles, project) => {
     if (propertyName === PROJECT_NAME_PROPERTY) {
       return projectsNames;
     }
-    return projectRoles.length === 0
-      ? [USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE]
-      : [...projectRoles, USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE];
+    if (projectRoles.length === 0) {
+      return [USER_PROJECT_ROLE_DROPDOWN_UNAVAILABLE_VALUE];
+    }
+    if (project[propertyName] === USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE || project[propertyName]) {
+      return [...projectRoles];
+    }
+    return [...projectRoles, USER_PROJECT_ROLE_DROPDOWN_NOT_SELECTED_VALUE];
   };
 
   const item = (project, index, propertyName, projectRoles) => (
@@ -118,7 +122,12 @@ function EditableProject(props) {
         }
         propertyName={propertyName}
         onChange={handleOnChange}
-        options={getOptions(propertyName, props.projectsNames, projectRoles)}
+        options={getOptions(
+          propertyName,
+          props.projectsNames,
+          projectRoles,
+          project
+        )}
         disabled={
           propertyName === PROJECT_ROLE_PROPERTY && projectRoles.length === 0
         }
